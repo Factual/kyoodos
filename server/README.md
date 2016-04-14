@@ -16,6 +16,8 @@ To start a web server for the application, run:
 
 ## MIGRATION
 
+Notes: Please install postgresql and create a database named as `kyoodos`
+
 Migration files located at $ROOT/resources/migrations
 
     lein migratus migrate

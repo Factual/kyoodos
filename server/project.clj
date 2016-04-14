@@ -6,8 +6,11 @@
 								 [compojure "1.5.0"]
 								 [ring/ring-defaults "0.1.5"]
                  [org.slf4j/slf4j-log4j12 "1.7.9"]
+                 [org.clojure/data.json "0.2.6"]
                  [postgresql "9.3-1102.jdbc41"]
-                 [migratus "0.8.13"]]
+                 [migratus "0.8.13"]
+                 [yesql "0.5.2"]]
+  :injections [(require 'clojure.data.json)]
 	:plugins [[lein-ring "0.9.7"]
 						[migratus-lein "0.2.6"]]
 	:ring {:handler com.factual.kyoodos.handler/app}
@@ -15,8 +18,8 @@
 																	[ring/ring-mock "0.3.0"]]}}
 	:migratus {:store :database
 						 :migration-dir "migrations"
-						 :db {:classname "org.postgresql.Driver"
-									:subprotocol "postgresql"
-									:subname "//localhost:5432/kyoodos"
-									:user "postgres"
-									:password "postgres"}})
+						 :db (clojure.data.json/read-str
+                   (slurp
+                     (clojure.java.io/file
+                       (clojure.java.io/resource "config/database.json")))
+                       :key-fn keyword)})
