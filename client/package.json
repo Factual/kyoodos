@@ -1,0 +1,21 @@
+{
+  "name": "kyoodos",
+  "version": "1.0.0",
+  "description": "",
+  "main": "webpack.config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "./node_modules/.bin/webpack-dev-server"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "babel-core": "^6.7.6",
+    "babel-loader": "^6.2.4",
+    "react": "^15.0.1",
+    "react-bootstrap": "^0.28.5",
+    "react-dom": "^15.0.1",
+    "webpack": "^1.12.15",
+    "webpack-dev-server": "^1.14.1"
+  }
+}
