@@ -16,19 +16,19 @@
   (testing "get kyoodos route"
     (let [response (app (mock/request :get "/kyoodos" {:user_or_group_id "1", :direction "from"}))]
       (is (= (:status response) 200))
-      (is (= (:body response) "You requested kyoodos from 1"))))
+      (is (= (:body response) {:direction "from" :user_or_group_id "1"}))))
 
   (testing "post kyoodos route"
     (let [response (app (mock/request :post "/kyoodos" {:content "good job"}))]
       (is (= (:status response) 200))
-      (is (= (:body response) "You posted: good job"))))
+      (is (= (:body response) {:status "success"}))))
 
   (testing "get user route"
     (let [response (app (mock/request :get "/user" {:user_id "1"}))]
       (is (= (:status response) 200))
-      (is (= (:body response) "You requested user: 1"))))
+      (is (= (:body response) {:user_id "1"}))))
 
   (testing "get group route"
     (let [response (app (mock/request :get "/group" {:group_id "1"}))]
       (is (= (:status response) 200))
-      (is (= (:body response) "You requested group: 1"))))
+      (is (= (:body response) {:group_id "1"}))))
