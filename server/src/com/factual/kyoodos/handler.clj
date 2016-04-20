@@ -23,8 +23,6 @@
 
 (defroutes app-routes
   (GET "/" [] "Hello World")
-  (GET "/test" [] 
-    {:status 200 :headers {"Content-type" "application/json"} :body "{}"})
   (GET "/kyoodos" [] get-kyoodos)
   (POST "/kyoodos" [] post-kyoodos)
   (GET "/user" [] get-user)
