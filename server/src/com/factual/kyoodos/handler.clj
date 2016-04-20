@@ -1,7 +1,10 @@
 (ns com.factual.kyoodos.handler
+  (:use [com.factual.kyoodos.utils.query_generator])
   (:require [compojure.core :refer :all]
             [compojure.route :as route]
             [ring.middleware.defaults :refer [wrap-defaults site-defaults]]))
+
+(defqueries "queries/queries.sql")
 
 ; if no :user_or_group_id, get current_user kyoodos
 (defn get-kyoodos [request]
