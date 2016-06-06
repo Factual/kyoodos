@@ -1,5 +1,5 @@
-(ns com.factual.kyoodos.tools.import-users
-  (:require [com.factual.kyoodos.utils.query_generator :as query_generator]
+(ns kyoodos.tools.import-users
+  (:require [kyoodos.utils.query_generator :as query_generator]
             [clojure.data.json]))
 
 (def people

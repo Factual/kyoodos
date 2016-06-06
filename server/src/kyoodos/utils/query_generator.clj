@@ -1,4 +1,4 @@
-(ns com.factual.kyoodos.utils.query_generator
+(ns kyoodos.utils.query_generator
   (:require [yesql.core]
             [clojure.data.json]))
 

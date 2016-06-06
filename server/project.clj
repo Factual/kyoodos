@@ -13,7 +13,7 @@
   :injections [(require 'clojure.data.json)]
 	:plugins [[lein-ring "0.9.7"]
 						[migratus-lein "0.2.6"]]
-	:ring {:handler com.factual.kyoodos.handler/app}
+	:ring {:handler kyoodos.handler/app}
 	:profiles {:dev {:dependencies [[javax.servlet/servlet-api "2.5"]
 																	[ring/ring-mock "0.3.0"]]}}
 	:migratus {:store :database

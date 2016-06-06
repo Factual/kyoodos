@@ -1,7 +1,7 @@
-(ns com.factual.kyoodos.handler-test
+(ns kyoodos.handler-test
   (:require [clojure.test :refer :all]
             [ring.mock.request :as mock]
-            [com.factual.kyoodos.handler :refer :all]))
+            [kyoodos.handler :refer :all]))
 
 (deftest test-app
   (testing "main route"
