@@ -1,0 +1,13 @@
+!!!
+%html
+  %head
+    %script{src: 'https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js', type: 'text/javascript'}
+  %body
+    %h1 Kyoodos
+    %ul
+    :javascript
+      $(function() {
+        $.get('/kyoodos', function(list) {
+          // TODO
+        })
+      })
