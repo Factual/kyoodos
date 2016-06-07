@@ -6,11 +6,17 @@
   
 (defn get-user [user-id]
   (get-user-raw {:user_id user-id}))
-
 (defn create-user [token username email]
   (insert-user-raw! {:token token
                      :username username
                      :email email}))
+(defn update-user [id token username email]
+  (update-user-raw! {:id id
+                     :token token
+                     :username username
+                     :email email}))
+(defn delete-user [id]
+  (delete-user-raw! {:id id}))
 
 (defn get-group [group-id]
   (get-group-raw {:group_id group-id}))

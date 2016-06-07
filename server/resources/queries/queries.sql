@@ -1,7 +1,3 @@
-
--- name: get-user-raw
-SELECT * FROM users WHERE id = :user_id
-
 -- name: get-group-raw
 SELECT * FROM groups WHERE id = :group_id
 
@@ -23,5 +19,11 @@ SELECT EXISTS(SELECT * FROM groups where id=:id)
 --name: insert-kyoodo-raw!
 INSERT INTO kyoodos (from_user_id, to_user_id, content_raw, content) VALUES (:from_user_id, :to_user_id, :content_raw, :content)
 
+-- name: get-user-raw
+SELECT * FROM users WHERE id = :user_id
 --name: insert-user-raw!
 INSERT INTO users (token, username, email) VALUES (:token, :username, :email)
+--name: update-user-raw!
+UPDATE users SET token=:token, username=:username, email=:email WHERE id=:id
+--name: delete-user-raw!
+DELETE FROM users WHERE id=:id

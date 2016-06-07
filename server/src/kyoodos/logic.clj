@@ -16,3 +16,11 @@
         username (get (:params request) :username)
         email    (get (:params request) :email)]
     (json/generate-string (data/create-user token username email))))
+(defn update-user [request]
+  (let [id       (get (:params request) :id)
+        token    (get (:params request) :token)
+        username (get (:params request) :username)
+        email    (get (:params request) :email)]
+    (json/generate-string (data/update-user id token username email))))
+(defn delete-user [id]
+  (json/generate-string (data/delete-user id)))

@@ -12,6 +12,10 @@
     (rr/response (logic/get-user (read-string id))))
   (POST "/users" request
     (rr/response (logic/create-user request)))
+  (PUT "/users/:id{[0-9]+}" request
+    (rr/response (logic/update-user request)))
+  (DELETE "/users/:id{[0-9]+}" [id]
+    (rr/response (logic/delete-user id)))
 
   (GET "/groups/:id{[0-9]+}" [id]
     (rr/response (logic/get-group (read-string id))))
