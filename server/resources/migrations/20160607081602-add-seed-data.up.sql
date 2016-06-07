@@ -1,0 +1,14 @@
+INSERT INTO groups (id, name) VALUES (1, 'front');
+--;;
+INSERT INTO user_groups (user_id, group_id) VALUES (41, 1);
+--;;
+INSERT INTO user_groups (user_id, group_id) VALUES (54, 1);
+--;;
+INSERT INTO user_groups (user_id, group_id) VALUES (180, 1);
+--;;
+INSERT INTO user_groups (user_id, group_id) VALUES (126, 1);
+--;;
+INSERT INTO user_groups (user_id, group_id) VALUES (133, 1);
+--;;
+INSERT INTO user_groups (user_id, group_id) VALUES (39, 1);
+--;;
