@@ -1,0 +1,23 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "github.com/Factual/kyoodos"
+  },
+  "keywords": [
+    "kudos",
+    "factual"
+  ],
+  "author": "sarahkim@factual.com, forrest@factual.com, honghao@factual.com",
+  "license": "ISC",
+  "dependencies": {
+    "botkit": "^0.2.0",
+    "express": "^4.13.4"
+  }
+}
