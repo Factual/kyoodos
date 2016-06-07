@@ -1,8 +1,7 @@
 var express = require('express');
 var app = express();
 var engines = require('consolidate');
-
-var conn = require('./db/conn');
+var kyoodos = require('./models/kyoodos');
 
 app.engine('haml', engines.haml);
 app.set('views', __dirname + '/views');
@@ -12,9 +11,9 @@ app.get('/', function(req, res, next) {
 })
 
 app.get('/api/kyoodos', function(req, res, next) {
-  conn.execute('SELECT * from kyoodos').then(function(kyoodos) {
-    res.json(kyoodos);
-  })
+  kyoodos.findAll(function(err, data) {
+    res.json(data);
+  });
 })
 
 app.listen(3000, function() {
