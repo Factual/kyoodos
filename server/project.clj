@@ -10,6 +10,7 @@
                  [postgresql "9.3-1102.jdbc41"]
                  [migratus "0.8.13"]
                  [cheshire "5.5.0"]
+                 [stuarth/clj-oauth2 "0.3.2"]
                  [yesql "0.5.2"]]
   :injections [(require 'clojure.data.json)]
 	:plugins [[lein-ring "0.9.7"]
