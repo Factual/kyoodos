@@ -7,6 +7,11 @@
 (defn get-user [user-id]
   (get-user-raw {:user_id user-id}))
 
+(defn create-user [token username email]
+  (insert-user-raw! {:token token
+                     :username username
+                     :email email}))
+
 (defn get-group [group-id]
   (get-group-raw {:group_id group-id}))
 

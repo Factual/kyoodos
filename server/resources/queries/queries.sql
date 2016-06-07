@@ -22,3 +22,6 @@ SELECT EXISTS(SELECT * FROM groups where id=:id)
 
 --name: insert-kyoodo-raw!
 INSERT INTO kyoodos (from_user_id, to_user_id, content_raw, content) VALUES (:from_user_id, :to_user_id, :content_raw, :content)
+
+--name: insert-user-raw!
+INSERT INTO users (token, username, email) VALUES (:token, :username, :email)

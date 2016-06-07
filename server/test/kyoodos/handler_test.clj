@@ -3,11 +3,11 @@
             [ring.mock.request :as mock]
             [kyoodos.handler :refer :all]))
 
-;(deftest test-app
-;  (testing "main route"
-;    (let [response (app (mock/request :get "/"))]
-;      (is (= (:status response) 200))
-;      (is (= (:body response) "Hello World"))))
+(deftest test-app
+; (testing "main route"
+;   (let [response (app (mock/request :get "/"))]
+;     (is (= (:status response) 200))
+;     (is (= (:body response) "Hello World"))))
 ;
 ;  (testing "not-found route"
 ;    (let [response (app (mock/request :get "/invalid"))]
@@ -32,3 +32,9 @@
 ;    (let [response (app (mock/request :get "/group" {:group_id "1"}))]
 ;      (is (= (:status response) 200))
 ;      (is (= (:body response) {:group_id "1"}))))
+;
+;  (testing "post users route"
+;    (let [response (app (mock/request :post "/users" {:token "!2" :username "HH1" :email "honghao+hh1@factual.com"}))]
+;      (is (= (:status response) 200))
+;      (is (= (:body response) "1"))))
+)

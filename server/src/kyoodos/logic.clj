@@ -10,3 +10,9 @@
 
 (defn get-user [request]
   (json/generate-string (data/get-user request)))
+
+(defn create-user [request]
+  (let [token    (get (:params request) :token)
+        username (get (:params request) :username)
+        email    (get (:params request) :email)]
+    (json/generate-string (data/create-user token username email))))
