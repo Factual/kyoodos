@@ -10,7 +10,8 @@ var kyoodos = (function() {
         .catch(function(onRejected) {
           cb(onRejected, null);
         })
+    }
   }
-})()
+})();
 
 module.exports = kyoodos
