@@ -16,5 +16,4 @@ var slackbot = (function() {
   });
 })()
 
-
 module.exports = slackbot;
