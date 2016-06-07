@@ -1,27 +1,25 @@
 (ns kyoodos.handler
   (:require [compojure.core :refer :all]
             [compojure.route :as route]
-            [ring.util.response :as rr]
             [ring.middleware.defaults :refer [wrap-defaults site-defaults]]
             [kyoodos.logic :as logic]))
 
 (defroutes app-routes
-  (GET "/" [] "Hello World")
-
+  (GET "/" [] "Hello world!")
   (GET "/users/:id{[0-9]+}" [id]
-    (rr/response (logic/get-user (read-string id))))
+    (logic/get-user (read-string id)))
   (POST "/users" request
-    (rr/response (logic/create-user request)))
+    (logic/create-user request))
   (PUT "/users/:id{[0-9]+}" request
-    (rr/response (logic/update-user request)))
+    (logic/update-user request))
   (DELETE "/users/:id{[0-9]+}" [id]
-    (rr/response (logic/delete-user id)))
+    (logic/delete-user id))
 
   (GET "/groups/:id{[0-9]+}" [id]
-    (rr/response (logic/get-group (read-string id))))
+    (logic/get-group (read-string id)))
 
   (GET "/kyoodos/:direction/:id{[0-9]+}" [direction id]
-    (rr/response (logic/get-kyoodos (read-string direction) (read-string id))))
+    (logic/get-kyoodos (read-string direction) (read-string id)))
 
   (route/not-found "Not Found"))
 
