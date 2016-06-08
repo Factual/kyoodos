@@ -23,16 +23,17 @@ var query = (function() {
 
     conn.execute(q)
         .then(function(user) {
-          console.log('got user', JSON.stringify(user));
-          return user;
+          if (user.length > 0) {
+            return user;
+          } else {
+            // if not exists, find from slack API and save
+            return _getUserInfo(id, function(userHash) {
+              _saveUserToDB(userHash);
+            });
+          }
         }).catch(function(onRejected) {
-          console.log('user not found', JSON.stringify(onRejected));
-          // if not exists, find from slack API and save
-          return _getUserInfo(id, function(userHash) {
-            console.log(JSON.stringify(userHash));
-            return _saveUserToDB(userHash);
-          })
-        })
+          console.warn('query rejected', JSON.stringify(onRejected));
+        });
   }
 
   // saves to DB and returns cleaned user opts
@@ -42,7 +43,6 @@ var query = (function() {
                          .set("id", userHash.id)
                          .set("first_name", userHash.profile.first_name)
                          .set("last_name", userHash.profile.last_name)
-                         .set("username", userHash.name)
                          .set("email", userHash.profile.email)
                          .set("avatar", userHash.profile.image_512 ||
                                         userHash.profile.image_192 ||
