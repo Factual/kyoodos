@@ -37,13 +37,18 @@ var query = (function() {
     };
     var valuesToInsert = _getObjValues(user);
 
+    var query = 'INSERT INTO users VALUES (' + valuesToInsert.join(', ') + ')';
+    console.log('q', query);
     conn.execute('INSERT INTO users VALUES (' + valuesToInsert.join(', ') + ')');
     return user;
   }
 
   var _saveKudoToDB = function(message) {
     var valuesToInsert = _getObjValues(message);
-
+    console.log('message', message);
+     // INSERT INTO kyoodos VALUES (U1ESGNFBP, <@U1ES7212Q>, [object Object], hi <@U1ES7212Q>, 1465351477.000005)
+    var query = 'INSERT INTO kyoodos VALUES (' + valuesToInsert.join(', ') + ')';
+    console.log('q', query);
     conn.execute('INSERT INTO kyoodos VALUES (' + valuesToInsert.join(', ') + ')')
       .then(function(postedData) {
         return postedData;
