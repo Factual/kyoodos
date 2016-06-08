@@ -1,19 +1,20 @@
 var parser = require('./parser');
 var slackAPI  = require('./slack_webapi');
+var conn = require('../db/conn');
 
 var query = (function() {
 
   var getUserFromDB = function(id) {
-    var user;
-
-    // check db, if exists, return
-    if (user) {
-      return user
-    } else {
-      // if not exists, find from slack API and save
-      return _getUserInfo(id, function(userHash) {
-        return _saveUserToDB(userHash)
-      }
+    conn.execute('SELECT * FROM users WHERE id=' + id)
+      .then(function(user) {
+        return user;
+      })
+      .catch(function(onRejected) {
+        // if not exists, find from slack API and save
+        return _getUserInfo(id, function(userHash) {
+          return _saveUserToDB(userHash)
+        }
+      })
     }
   }
 
@@ -30,12 +31,35 @@ var query = (function() {
 
   // saves to DB and returns cleaned user opts
   var _saveUserToDB = function(userHash) {
-    var user = {}
+    var user = {
+      id: userHash.id,
+      username: userHash.name,
+      email: userHash.profile.email,
+      avatar: userHash.profile.image_72
+    };
+    var valuesToInsert = _getObjValues(user);
+
+    conn.execute('INSERT INTO users VALUES (' + valuesToInsert.join(', ') + ')');
     return user;
   }
 
-  var _saveKudoToDB = function(message, user) {
-    // to do  
+  var _saveKudoToDB = function(message) {
+    var valuesToInsert = _getObjValues(message);
+
+    conn.execute('INSERT INTO kyoodos VALUES (' + valuesToInsert.join(', ') + ')')
+      .then(function(postedData) {
+        return postedData;
+      }).catch(function(err) {
+        throw err;
+      })
+  }
+
+  var _getObjValues = function(obj) {
+    var arr = [];
+    for (k in obj) {
+      arr.push(obj[k]
+    }
+    return arr;
   }
 
   return {
@@ -45,8 +69,7 @@ var query = (function() {
     saveKudo: function(message) {
       var parsed = parser.parseMessage(message),
           user = getUser(message.user);
-
-      // save to db
+      _saveKudoToDB(parsed);
     },
     getKudo: function(params) {
       var from = params.from_user,

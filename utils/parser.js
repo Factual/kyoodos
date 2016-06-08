@@ -5,16 +5,17 @@ var parser = {
     return {
       from_user_id: message.user,
       to_user_id: to_user,
-      text: message.text,
-      created_at: message.ts,
       content_raw: message
+      content: message.text,
+      created_at: message.ts,
     }
   },
 
   // a direct message person: <@USLACKBOT>
   // returns an array of receivers
   parseReceiver: function(messageText) {
-    return [] 
+    var regex = /<@(.*?)>/;
+    return regex.exec(messageText)[0]
   }
 }
 
