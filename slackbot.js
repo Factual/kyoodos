@@ -5,7 +5,19 @@ var slackAPI = require('./utils/slack_webapi');
 
 
 // connect to slack's real time message api
-var rtm = new RtmClient(API_TOKEN, {logLevel: ''});
+var clientOpts = {logLevel: ''};
+if (process.env.http_proxy) {
+  var HttpsProxyAgent = require('https-proxy-agent');
+  var WebSocket = require('ws');
+  clientOpts.socketFn = function (socketUrl) {
+    var wsOpts = {
+      agent: new HttpsProxyAgent(process.env.http_proxy)
+    };
+
+    return new WebSocket(socketUrl, wsOpts);
+  }
+}
+var rtm = new RtmClient(API_TOKEN, clientOpts);
 rtm.start();
 
 var RTM_EVENTS = require('@slack/client').RTM_EVENTS;
@@ -20,6 +32,5 @@ rtm.on(RTM_EVENTS.MESSAGE, function (message) {
   if (message.type == 'message') {
     console.log("This is a message", message);
     query.saveKudo(message);
-  } 
+  }
 });
-
