@@ -9,13 +9,36 @@
     %ul.kyoodos
     :javascript
       WAIT_TIME = 3000;
-      $(function() {
-        updateList = function (kyoodos) {
+      ROTATE_SIZE = 5;
+      $shoutouts = [];
+      shouting = 0;
+
+      function parse(k) {
+        // TODO parse kyoodo
+        // * message <@U2323EWE|username> to <b>@username</b>
+        // * sender: sender object to a <img class="sender">
+        // * receivers: receivers array to <img class="receiver">s
+        return k;
+      }
+
+      function updateList() {
+        render = function (kyoodos) {
           console.log('updating...');
           $ul = $('.kyoodos');
-          $ul.clear();
-          kyoodos.forEach(function(k) {
-            $li = $ul.add('<li />');
+          $ul.clear(); $shoutouts = []; shouting = 0;
+
+          kyoodos.forEach(function(kyoodo) {
+            var k = parse(kyoodo);
+            $li = $ul.append('<li />');
+            $li.append($('<p class="message"/>').text(k.message));
+            $li.append(k.sender);
+            k.receivers.forEach(function (rec) {
+              $li.append(rec);
+            })
+
+            if ($shoutouts.length < ROTATE_SIZE) {
+              $shoutouts.push($li);
+            }
           })
         }
 
@@ -26,7 +49,7 @@
             if (timestamp == lastCreated) {
               wait();
             } else {
-              $.get('/api/kyoodos', updateList).then(wait);
+              $.get('/api/kyoodos', render).then(wait);
             }
           })
         }
@@ -36,4 +59,18 @@
         }
 
         run();
+      }
+
+      function shoutout() {
+        var $li = $shoutouts[shouting];
+        if ($li) {
+          $li.animate(width: '200%').animate(width: '100%').then(shoutout)
+        } else {
+          setTimeout(shoutout, WAIT_TIME)
+        }
+      }
+
+      $(function() {
+        updateList();
+        shoutout();
       })
