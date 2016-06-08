@@ -16,7 +16,7 @@ var query = (function() {
   }
 
   var getUserFromDB = function(id) {
-    conn.execute('SELECT * FROM users WHERE id=' + id)
+    conn.execute('SELECT * FROM slack_users WHERE id=' + id)
       .then(function(user) {
         return user;
       }).catch(function(onRejected) {
@@ -37,9 +37,9 @@ var query = (function() {
     };
     var valuesToInsert = _getObjValues(user);
 
-    var query = 'INSERT INTO users VALUES (' + valuesToInsert.join(', ') + ')';
+    var query = 'INSERT INTO slack_users VALUES (' + valuesToInsert.join(', ') + ')';
     console.log('q', query);
-    conn.execute('INSERT INTO users VALUES (' + valuesToInsert.join(', ') + ')');
+    conn.execute('INSERT INTO slack_users VALUES (' + valuesToInsert.join(', ') + ')');
     return user;
   }
 
