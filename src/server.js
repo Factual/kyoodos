@@ -8,6 +8,7 @@ resJson = function (res) {
   return function(data) { res.json(data || null)}
 }
 
+
 app.use(express.static('public'));
 app.engine('haml', engines.haml);
 app.set('views', __dirname + '/../views');
@@ -23,11 +24,15 @@ app.get('/api/kyoodos/lastCreated', function(req, res, next) {
 app.get('/api/kyoodos', function(req, res, next) {
   Kyoodo.findAll().then(resJson(res)).catch(next);
 })
-
+app.get('/api/users', function(req, res, next) {
+  User.findAll().then(resJson(res)).catch(next);
+})
 app.get('/api/users/:id', function(req, res, next) {
   User.find(req.params.id).then(resJson(res)).catch(next);
 })
 
-app.listen(3000, function() {
+var server = app.listen(3000, function() {
   console.log('Listening on port 3000!');
 })
+
+module.exports = server;
