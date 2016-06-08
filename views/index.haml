@@ -3,14 +3,18 @@
   %head
     %link{href: '//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css', rel: 'stylesheet'}
     %link{href: 'application.css', rel: 'stylesheet'}
+    %link{href: 'https://fonts.googleapis.com/css?family=Open+Sans:300,700,400', rel: 'stylesheet', type:'text/css'}
     %script{src: '/slack-emoji.js', type: 'text/javascript'}
     %script{src: '//ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js', type: 'text/javascript'}
     %script{src: '//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js', type: 'text/javascript'}
     %script{src: '//cdnjs.cloudflare.com/ajax/libs/async/1.5.2/async.min.js', type: 'text/javascript'}
-  %body
-    %h1 Kyoodos
-    %ul.kyoodos
 
+  %body
+    .page-header
+      %h1 Factual Kyoodos
+    .container
+      %ul.kyoodos
+      
     :javascript
       WAIT_TIME = 3000;
       ROTATE_SIZE = 5;
@@ -65,7 +69,7 @@
 
           kyoodos.forEach(function(kyoodo) {
             parse(kyoodo, function (k) {
-              var $li = $('<li>');
+              var $li = $('<li class="col-md-3 col-xs-12">');
 
               var $ele = $('<span class="sender" title="@' + k.sender.username + '"></span>');
               $ele.append('<img class="avatar" src="' + k.sender.avatar + '">');
