@@ -1,6 +1,8 @@
 var parser = require('./parser');
 var slackAPI  = require('./slack_webapi');
 var conn = require('../db/conn');
+var squel = require("squel");
+var squelPostgres = squel.useFlavour('postgres');
 
 var query = (function() {
 
@@ -16,7 +18,12 @@ var query = (function() {
   }
 
   var getUserFromDB = function(id) {
-    conn.execute('SELECT * FROM slack_users WHERE id=' + id)
+    var q = squelPostgres.select()
+      .from("slack_users")  
+      .where("id = " + id)
+      .toString()
+
+    conn.execute(q)
       .then(function(user) {
         return user;
       }).catch(function(onRejected) {
@@ -29,27 +36,28 @@ var query = (function() {
 
   // saves to DB and returns cleaned user opts
   var _saveUserToDB = function(userHash) {
-    var user = {
-      id: userHash.id,
-      username: userHash.name,
-      email: userHash.profile.email,
-      avatar: userHash.profile.image_72
-    };
-    var valuesToInsert = _getObjValues(user);
-
-    var query = 'INSERT INTO slack_users VALUES (' + valuesToInsert.join(', ') + ')';
+    var q = squelPostgres.insert()
+        .into("slack_users")
+        .set("id", userHash.id)
+        .set("username", userHash.name)
+        .set("email", userHash.profile.email)
+        .set("avatar", userHash.profile.image_72 || "")
+        .toString()
     console.log('q', query);
-    conn.execute('INSERT INTO slack_users VALUES (' + valuesToInsert.join(', ') + ')');
+    conn.execute(q);
     return user;
   }
 
   var _saveKudoToDB = function(message) {
-    var valuesToInsert = _getObjValues(message);
-    console.log('message', message);
-     // INSERT INTO kyoodos VALUES (U1ESGNFBP, <@U1ES7212Q>, [object Object], hi <@U1ES7212Q>, 1465351477.000005)
-    var query = 'INSERT INTO kyoodos VALUES (' + valuesToInsert.join(', ') + ')';
-    console.log('q', query);
-    conn.execute('INSERT INTO kyoodos VALUES (' + valuesToInsert.join(', ') + ')')
+    var q = squelPostgres.insert()
+      .into("kyoodos")
+      .set("from_user_id", message.from_user_id)
+      .set("content_raw", message.content_raw)
+      .set("content", message.content)
+      .set("created_at", "to_timestamp(" + message.created_at + ")")
+      .toString()
+    console.log(q); 
+    conn.execute(q)
       .then(function(postedData) {
         return postedData;
       }).catch(function(err) {
