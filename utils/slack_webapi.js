@@ -2,7 +2,7 @@ var querystring = require('querystring');
 var https = require('https');
 
 //FIXME: move to config file
-var API_TOKEN = "xoxb-48865988387-7nZkKAhNLTSwoyqVwoLHUzki"; 
+var API_TOKEN = "xoxb-48994206208-yGMA8JgKrMWga5xr8EhsB7gr";
 var HOST = 'https://slack.com/api';
 
 var slackAPI = (function() {

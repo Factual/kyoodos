@@ -1,4 +1,4 @@
-var API_TOKEN = "xoxb-48865988387-7nZkKAhNLTSwoyqVwoLHUzki"; //FIXME: move to config file
+var API_TOKEN = 'xoxb-48994206208-yGMA8JgKrMWga5xr8EhsB7gr';
 var RtmClient = require('@slack/client').RtmClient;
 var query = require('./utils/query');
 var slackAPI = require('./utils/slack_webapi');

@@ -4,22 +4,8 @@ var conn = require('../db/conn');
 
 var query = (function() {
 
-  var getUserFromDB = function(id) {
-    conn.execute('SELECT * FROM users WHERE id=' + id)
-      .then(function(user) {
-        return user;
-      })
-      .catch(function(onRejected) {
-        // if not exists, find from slack API and save
-        return _getUserInfo(id, function(userHash) {
-          return _saveUserToDB(userHash)
-        }
-      })
-    }
-  }
-
   // make API call
-  var getUserInfo = function(id, cb) {
+  var _getUserInfo = function(id, cb) {
     var user = slackAPI.getUser(id, function(resp) {
       if (resp.ok) {
         cb(resp.user);
@@ -27,6 +13,18 @@ var query = (function() {
         console.warn('Api call failed'); // TODO: error handling
       }
     })
+  }
+
+  var getUserFromDB = function(id) {
+    conn.execute('SELECT * FROM users WHERE id=' + id)
+      .then(function(user) {
+        return user;
+      }).catch(function(onRejected) {
+        // if not exists, find from slack API and save
+        return _getUserInfo(id, function(userHash) {
+          return _saveUserToDB(userHash);
+        })
+      })
   }
 
   // saves to DB and returns cleaned user opts
@@ -57,7 +55,7 @@ var query = (function() {
   var _getObjValues = function(obj) {
     var arr = [];
     for (k in obj) {
-      arr.push(obj[k]
+      arr.push(obj[k])
     }
     return arr;
   }
@@ -68,7 +66,7 @@ var query = (function() {
     },
     saveKudo: function(message) {
       var parsed = parser.parseMessage(message),
-          user = getUser(message.user);
+          user = getUserFromDB(message.user);
       _saveKudoToDB(parsed);
     },
     getKudo: function(params) {
@@ -76,6 +74,7 @@ var query = (function() {
           to = params.to_user;
     }
   }
+
 })();
 
 module.exports = query;
