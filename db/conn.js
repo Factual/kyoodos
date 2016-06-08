@@ -9,7 +9,7 @@ executeFn = function(sql) {
     client.connect();
     var query = client.query(sql);
     var rows = [];
-    query.on('error', function() { reject('dbError'); });
+    query.on('error', function(err) { reject(err); });
     query.on('result', function(row) { rows.push(row); });
     query.on('end', function() { 
       client.end();
