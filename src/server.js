@@ -10,7 +10,7 @@ resJson = function (res) {
 
 app.use(express.static('public'));
 app.engine('haml', engines.haml);
-app.set('views', __dirname + '/views');
+app.set('views', __dirname + '/../views');
 
 app.get('/', function(req, res, next) {
   res.render('index.haml');

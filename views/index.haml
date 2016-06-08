@@ -12,7 +12,7 @@
     %ul.kyoodos
 
     :javascript
-      WAIT_TIME = 300000;
+      WAIT_TIME = 3000;
       ROTATE_SIZE = 5;
       $shoutouts = [];
       shouting = 0;
@@ -24,7 +24,6 @@
         var receiverIds = matches.map(function (m) {
           return m.match(/<@(.{9})>/)[1];
         });
-        console.log(receiverIds);
         userIds = receiverIds.concat([kyoodo.from_user_id]);
         async.each(userIds, function (id, cb) {
           $.get('/api/users/' + id, function (user) {
@@ -38,7 +37,6 @@
             res.receivers[id] = users[id];
           });
           var foobar = kyoodo.content.split(/((?:<@.{9}>)|(?::[^: ]+:))/);
-          console.log(kyoodo.content, foobar);
           res.message = foobar.map(function (x) {
             if (x.match(/<@.{9}>/)) {
               var id = x.match(/<@(.{9})>/)[1];
@@ -62,7 +60,6 @@
 
       function updateList() {
         render = function (kyoodos) {
-          console.log('updating...');
           $ul = $('.kyoodos');
           $ul.empty(); $shoutouts = []; shouting = 0;
 
@@ -91,6 +88,10 @@
               });
               $li.append($msg);
 
+              if ($shoutouts.length < ROTATE_SIZE) {
+                $shoutouts.push($li);
+              }
+
               $ul.append($li);
             });
           });
@@ -99,7 +100,6 @@
         var lastCreated;
         var run = function () {
           $.get('/api/kyoodos/lastCreated', function(timestamp) {
-            console.log('lastCreated:', timestamp);
             if (timestamp == lastCreated) {
               wait();
             } else {
