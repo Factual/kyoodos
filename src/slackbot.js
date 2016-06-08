@@ -30,7 +30,12 @@ rtm.on(CLIENT_EVENTS.RTM.AUTHENTICATED, function (rtmStartData) {
 // Listens to all `message` events from the team
 rtm.on(RTM_EVENTS.MESSAGE, function (message) {
   if (message.type == 'message') {
-    console.log("This is a message", JSON.stringify(message));
-    query.saveKudo(message);
+    console.log(message.type, message.subtype);
+    if (!message.subtype) {
+      console.log("can save!!!!!");
+      query.saveKudo(message);
+    } else {
+      console.log('cannot save!');
+    }
   }
 });

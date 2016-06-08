@@ -48,7 +48,7 @@ var query = (function() {
                                         userHash.profile.image_192 ||
                                         userHash.profile.image_72 || "")
                          .toString()
-    conn.execute(q);
+    return conn.execute(q);
   }
 
   var _saveKudoToDB = function(message) {
@@ -61,12 +61,12 @@ var query = (function() {
                               "to_timestamp(" + message.created_at + ")",
                               { dontQuote: true })
                          .toString()
-    conn.execute(q)
-    .then(function(postedData) {
-      return postedData;
-    }).catch(function(err) {
-      throw err;
-    })
+    return conn.execute(q)
+      .then(function(postedData) {
+        return postedData;
+      }).catch(function(err) {
+        throw err;
+      })
   }
 
   var _getObjValues = function(obj) {

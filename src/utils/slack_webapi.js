@@ -24,9 +24,6 @@ var slackAPI = (function() {
   }
 
   return {
-    test: function(cb) {
-      _getRequest('api.test', {}, cb);
-    },
     getUser: function(id, cb) {
       var data = { user: id };
       _getRequest('users.info', data, cb);
