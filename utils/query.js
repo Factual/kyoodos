@@ -1,14 +1,12 @@
 var parser = require('./parser');
 var slackAPI  = require('./slack_webapi');
 var conn = require('../db/conn');
-var squel = require("squel");
-var squelPostgres = squel.useFlavour('postgres');
+var squel = require("squel").useFlavour('postgres');
 
 var query = (function() {
   // make API call
   var _getUserInfo = function(id, cb) {
     var user = slackAPI.getUser(id, function(resp) {
-      console.log('slack user fetch', resp)
       if (resp.ok) {
         cb(resp.user);
       } else {
@@ -18,9 +16,9 @@ var query = (function() {
   }
 
   var getUserFromDB = function(id) {
-    var q = squelPostgres.select()
+    var q = squel.select()
                          .from("slack_users")  
-                         .where("id = " + id)
+                         .where("id = ?", id)
                          .toString()
 
     conn.execute(q)
@@ -28,10 +26,9 @@ var query = (function() {
           console.log('got user', JSON.stringify(user));
           return user;
         }).catch(function(onRejected) {
-          console.log('user not found', onRejected);
+          console.log('user not found', JSON.stringify(onRejected));
           // if not exists, find from slack API and save
           return _getUserInfo(id, function(userHash) {
-            console.log(11111111111111);
             console.log(JSON.stringify(userHash));
             return _saveUserToDB(userHash);
           })
@@ -40,7 +37,7 @@ var query = (function() {
 
   // saves to DB and returns cleaned user opts
   var _saveUserToDB = function(userHash) {
-    var q = squelPostgres.insert()
+    var q = squel.insert()
                          .into("slack_users")
                          .set("id", userHash.id)
                          .set("first_name", userHash.profile.first_name)
@@ -55,7 +52,7 @@ var query = (function() {
   }
 
   var _saveKudoToDB = function(message) {
-    var q = squelPostgres.insert()
+    var q = squel.insert()
                          .into("kyoodos")
                          .set("from_user_id", message.from_user_id)
                          .set("content_raw", message.content_raw)
@@ -89,7 +86,9 @@ var query = (function() {
     saveKudo: function(message, cb) {
       var parsed = parser.parseMessage(message);
       _saveKudoToDB(parsed);
-      getUserFromDB(message.user);
+      parsed.to.concat([message.user]).forEach(function(id) {
+        getUserFromDB(id);
+      });
     },
     getKudo: function(params) {
       var from = params.from_user,

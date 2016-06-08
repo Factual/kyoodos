@@ -1,45 +1,99 @@
 !!!
 %html
   %head
-    %link{href: 'http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css', rel: 'stylesheet'}
-    %script{src: 'https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js', type: 'text/javascript'}
+    %link{href: '//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css', rel: 'stylesheet'}
+    %link{href: 'application.css', rel: 'stylesheet'}
+    %script{src: '/slack-emoji.js', type: 'text/javascript'}
+    %script{src: '//ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js', type: 'text/javascript'}
     %script{src: '//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js', type: 'text/javascript'}
+    %script{src: '//cdnjs.cloudflare.com/ajax/libs/async/1.5.2/async.min.js', type: 'text/javascript'}
   %body
     %h1 Kyoodos
     %ul.kyoodos
+
     :javascript
-      WAIT_TIME = 3000;
+      WAIT_TIME = 300000;
       ROTATE_SIZE = 5;
       $shoutouts = [];
       shouting = 0;
 
-      function parse(k) {
-        // TODO parse kyoodo
-        // * message <@U2323EWE|username> to <b>@username</b>
-        // * sender: sender object to a <img class="sender">
-        // * receivers: receivers array to <img class="receiver">s
-        return k;
+      function parse(kyoodo, cb) {
+        var res = {};
+        var users = {};
+        var matches = kyoodo.content.match(/<@.{9}>/g) || [];
+        var receiverIds = matches.map(function (m) {
+          return m.match(/<@(.{9})>/)[1];
+        });
+        console.log(receiverIds);
+        userIds = receiverIds.concat([kyoodo.from_user_id]);
+        async.each(userIds, function (id, cb) {
+          $.get('/api/users/' + id, function (user) {
+            users[id] = user;
+            cb();
+          });
+        }, function (err) {
+          res.sender = users[kyoodo.from_user_id];
+          res.receivers = {}
+          receiverIds.forEach(function (id) {
+            res.receivers[id] = users[id];
+          });
+          var foobar = kyoodo.content.split(/((?:<@.{9}>)|(?::[^: ]+:))/);
+          console.log(kyoodo.content, foobar);
+          res.message = foobar.map(function (x) {
+            if (x.match(/<@.{9}>/)) {
+              var id = x.match(/<@(.{9})>/)[1];
+              x = {
+                type: 'user',
+                txt: users[id].username,
+                img: users[id].avatar
+              };
+            } else if (x.match(/^:[^:]+:$/)) {
+              x = {
+                type: 'emoji',
+                txt: x,
+                position: emojiPosition[x]
+              };
+            }
+            return x;
+          });
+          cb(res);
+        })
       }
 
       function updateList() {
         render = function (kyoodos) {
           console.log('updating...');
           $ul = $('.kyoodos');
-          $ul.clear(); $shoutouts = []; shouting = 0;
+          $ul.empty(); $shoutouts = []; shouting = 0;
 
           kyoodos.forEach(function(kyoodo) {
-            var k = parse(kyoodo);
-            $li = $ul.append('<li />');
-            $li.append($('<p class="message"/>').text(k.message));
-            $li.append(k.sender);
-            k.receivers.forEach(function (rec) {
-              $li.append(rec);
-            })
+            parse(kyoodo, function (k) {
+              var $li = $('<li>');
 
-            if ($shoutouts.length < ROTATE_SIZE) {
-              $shoutouts.push($li);
-            }
-          })
+              var $ele = $('<span class="sender" title="@' + k.sender.username + '"></span>');
+              $ele.append('<img class="avatar" src="' + k.sender.avatar + '">');
+              $li.append($ele);
+
+              var $msg = $('<span class="message">');
+              k.message.forEach(function (m) {
+                if (typeof(m) == 'object') {
+                  if (m.type == 'user') {
+                    var $ele = $('<span class="receiver" title="@' + m.txt + '"></span>');
+                    $ele.append('<img class="avatar" src="' + m.img + '">');
+                  } else if (m.type == 'emoji'){
+                    var $ele = $('<span class="emoji" title="' + m.txt +'">');
+                    $ele.append('<span class="emoji-inner" style="background: url(https://h2.slack-edge.com/e4cee/img/emoji_2016_02_06/sheet_apple_64_indexed_256colors.png);background-position:' + m.position + ';background-size:4100%"/>');
+                  }
+                  $msg.append($ele);
+                } else {
+                  $msg.append(m);
+                }
+              });
+              $li.append($msg);
+
+              $ul.append($li);
+            });
+          });
         }
 
         var lastCreated;

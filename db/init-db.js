@@ -15,11 +15,6 @@ var sql = `
     "avatar"     varchar(256)
   );
 
-  CREATE TABLE to_users(
-    "user_id"   varchar(40) NOT NULL,
-    "kyoodo_id" integer NOT NULL
-  );
-
   CREATE SEQUENCE "kyoodo_id_seq";
   CREATE TABLE "kyoodos" (
     "id"           int4 NOT NULL DEFAULT nextval('kyoodo_id_seq'),

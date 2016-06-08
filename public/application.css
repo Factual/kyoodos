@@ -1,0 +1,25 @@
+.emoji {
+  display: inline-block;
+  height: 1em;
+  width: 1em;
+}
+.emoji-inner {
+  display: inline-block;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+}
+
+.avatar{
+  display: inline-block;
+  height: 2em;
+  width: 2em;
+}
+
+.message {
+  margin-left: 2em;
+}
+
+ul.kyoodos li {
+  margin-bottom: 1em;
+}

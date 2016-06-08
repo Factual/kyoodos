@@ -2,11 +2,13 @@ var express = require('express');
 var app = express();
 var engines = require('consolidate');
 var Kyoodo = require('./models/kyoodo');
+var User = require('./models/user');
 
 resJson = function (res) {
   return function(data) { res.json(data || null)}
 }
 
+app.use(express.static('public'));
 app.engine('haml', engines.haml);
 app.set('views', __dirname + '/views');
 
@@ -15,11 +17,15 @@ app.get('/', function(req, res, next) {
 })
 
 app.get('/api/kyoodos/lastCreated', function(req, res, next) {
-  Kyoodo.lastCreated().then(resJson(res)).catch(next)
+  Kyoodo.lastCreated().then(resJson(res)).catch(next);
 })
 
 app.get('/api/kyoodos', function(req, res, next) {
-  Kyoodo.findAll().then(resJson(res)).catch(next)
+  Kyoodo.findAll().then(resJson(res)).catch(next);
+})
+
+app.get('/api/users/:id', function(req, res, next) {
+  User.find(req.params.id).then(resJson(res)).catch(next);
 })
 
 app.listen(3000, function() {
