@@ -4,6 +4,7 @@ var connectionString = process.env.DATABASE_URL || 'postgres://postgres:postgres
 
 Promise = require('promise');
 executeFn = function(sql) {
+  console.log(sql);
   return new Promise(function (fulfill, reject) {
     var client = new pg.Client(connectionString);
     client.connect();

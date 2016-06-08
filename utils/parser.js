@@ -1,4 +1,3 @@
-
 var parser = (function(){
   return {
     parseMessage: function(message) {

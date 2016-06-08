@@ -8,8 +8,7 @@ var HOST = 'https://slack.com/api';
 var slackAPI = (function() {
 
   var _getRequest = function(endpoint, data, cb) {
-    var path = HOST + '/' + endpoint + '?' + querystring.stringify(data) + '&token=' + API_TOKEN
-
+    var path = HOST + '/' + endpoint + '?' + querystring.stringify(data) + '&token=' + API_TOKEN;
 
     https.get(path, function(res) {
       var str = '';
@@ -19,7 +18,7 @@ var slackAPI = (function() {
       });
 
       res.on('end', function () {
-        console.log(str);
+        cb(JSON.parse(str));
       });
     });
   }

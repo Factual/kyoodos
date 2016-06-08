@@ -8,6 +8,7 @@ var query = (function() {
   // make API call
   var _getUserInfo = function(id, cb) {
     var user = slackAPI.getUser(id, function(resp) {
+      console.log('slack user fetch', resp)
       if (resp.ok) {
         cb(resp.user);
       } else {
@@ -23,14 +24,18 @@ var query = (function() {
                          .toString()
 
     conn.execute(q)
-    .then(function(user) {
-      return user;
-    }).catch(function(onRejected) {
-      // if not exists, find from slack API and save
-      return _getUserInfo(id, function(userHash) {
-        return _saveUserToDB(userHash);
-      })
-    })
+        .then(function(user) {
+          console.log('got user', JSON.stringify(user));
+          return user;
+        }).catch(function(onRejected) {
+          console.log('user not found', onRejected);
+          // if not exists, find from slack API and save
+          return _getUserInfo(id, function(userHash) {
+            console.log(11111111111111);
+            console.log(JSON.stringify(userHash));
+            return _saveUserToDB(userHash);
+          })
+        })
   }
 
   // saves to DB and returns cleaned user opts
@@ -38,13 +43,15 @@ var query = (function() {
     var q = squelPostgres.insert()
                          .into("slack_users")
                          .set("id", userHash.id)
+                         .set("first_name", userHash.profile.first_name)
+                         .set("last_name", userHash.profile.last_name)
                          .set("username", userHash.name)
                          .set("email", userHash.profile.email)
-                         .set("avatar", userHash.profile.image_72 || "")
+                         .set("avatar", userHash.profile.image_512 ||
+                                        userHash.profile.image_192 ||
+                                        userHash.profile.image_72 || "")
                          .toString()
-    console.log('q', query);
     conn.execute(q);
-    return user;
   }
 
   var _saveKudoToDB = function(message) {
@@ -57,7 +64,6 @@ var query = (function() {
                               "to_timestamp(" + message.created_at + ")",
                               { dontQuote: true })
                          .toString()
-    console.log(q); 
     conn.execute(q)
     .then(function(postedData) {
       return postedData;
@@ -76,12 +82,14 @@ var query = (function() {
 
   return {
     getUser: function(id, cb) {
-      return getUserFromDB(id);
+      getUserFromDB(id, function (user) {
+        cb(user)
+      });
     },
-    saveKudo: function(message) {
-      var parsed = parser.parseMessage(message),
-        user = getUserFromDB(message.user);
-        _saveKudoToDB(parsed);
+    saveKudo: function(message, cb) {
+      var parsed = parser.parseMessage(message);
+      _saveKudoToDB(parsed);
+      getUserFromDB(message.user);
     },
     getKudo: function(params) {
       var from = params.from_user,

@@ -64,7 +64,7 @@
       function shoutout() {
         var $li = $shoutouts[shouting];
         if ($li) {
-          $li.animate(width: '200%').animate(width: '100%').then(shoutout)
+          $li.animate({width: '200%'}).animate({width: '100%'}).then(shoutout)
         } else {
           setTimeout(shoutout, WAIT_TIME)
         }

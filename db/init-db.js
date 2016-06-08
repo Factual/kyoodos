@@ -1,19 +1,23 @@
 var conn = require('./conn');
 
 var sql = `
+  -- DROP ALL TABLES
   DROP SCHEMA PUBLIC CASCADE;
   CREATE SCHEMA PUBLIC;
 
+  -- CREATE TABLES
   CREATE TABLE slack_users(
-    "id"         VARCHAR(40) not null,
-    "first_name" VARCHAR(40),
-    "last_name"  VARCHAR(80),
-    "email"      VARCHAR(100)
+    "id"         varchar(40) NOT NULL,
+    "first_name" varchar(80),
+    "last_name"  varchar(80),
+    "username"   varchar(80),
+    "email"      varchar(100),
+    "avatar"     varchar(256)
   );
 
   CREATE TABLE to_users(
-    "user_id"   VARCHAR(40) not null,
-    "kyoodo_id" integer not null
+    "user_id"   varchar(40) NOT NULL,
+    "kyoodo_id" integer NOT NULL
   );
 
   CREATE SEQUENCE "kyoodo_id_seq";
@@ -24,6 +28,8 @@ var sql = `
     "content"      text,
     "created_at"   timestamp(6) NULL
   );
+
+  -- INIT DATA
 `;
 
 conn.execute(sql)
