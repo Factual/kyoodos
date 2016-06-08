@@ -6,10 +6,34 @@
     %script{src: '//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js', type: 'text/javascript'}
   %body
     %h1 Kyoodos
-    %ul
+    %ul.kyoodos
     :javascript
+      WAIT_TIME = 3000;
       $(function() {
-        $.get('/kyoodos', function(list) {
-          // TODO
-        })
+        updateList = function (kyoodos) {
+          console.log('updating...');
+          $ul = $('.kyoodos');
+          $ul.clear();
+          kyoodos.forEach(function(k) {
+            $li = $ul.add('<li />');
+          })
+        }
+
+        var lastCreated;
+        var run = function () {
+          $.get('/api/kyoodos/lastCreated', function(timestamp) {
+            console.log('lastCreated:', timestamp);
+            if (timestamp == lastCreated) {
+              wait();
+            } else {
+              $.get('/api/kyoodos', updateList).then(wait);
+            }
+          })
+        }
+
+        var wait = function () {
+          setTimeout(run, WAIT_TIME);
+        }
+
+        run();
       })

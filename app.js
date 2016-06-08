@@ -4,7 +4,7 @@ var engines = require('consolidate');
 var Kyoodo = require('./models/kyoodo');
 
 resJson = function (res) {
-  return function(data) { res.json(data)}
+  return function(data) { res.json(data || null)}
 }
 
 app.engine('haml', engines.haml);
