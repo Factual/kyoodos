@@ -1,12 +1,20 @@
 import React, { Component } from 'react';
-import {render} from 'react-dom';
+import ReactDom, { render, findDOMNode } from 'react-dom'
+import Header from  './Header';
+import Body from  './Body';
 
 class App extends Component {
-  render(){
+  render() {
     return (
-      <h1>Hello World</h1>
+      <div>
+        <Header />
+        <Body />
+      </div>
     );
   }
 }
 
-render(<App />, document.getElementById('root'));
+ReactDom.render(
+    <App />,
+    document.getElementById('root')
+)
