@@ -1,21 +1,19 @@
 import React, { PropTypes } from 'react'; 
 import Kyoodo from './Kyoodo';
 
-// TODO:
-// calculate how many kyoodos in array, divide into multiple rows, then render each kyoodo
-
 let Kyoodos = React.createClass({
-
+  
   render: function() {
     let kyoodos = []
     if (this.props.kyoodos) {
-      this.props.kyoodos.forEach((k) => {
-        let kyoodo = <Kyoodo 
+      this.props.kyoodos.forEach((k, i) => {
+        kyoodos.push (<Kyoodo 
+                      key={i}
                       to={k.to}
                       from={k.from}
-                      message={k.message} />
-        kyoodos.push(kyoodo)
+                      message={k.message} />)
       })
+
       return (
         <div
           className='row medium-unstack kyoodos'>

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ReactDom, { render, findDOMNode } from 'react-dom'
-import Header from  './Header';
-import Body from  './Body';
+import Header from  './components/Header';
+import Body from  './components/Body';
 
 class App extends Component {
   render() {
