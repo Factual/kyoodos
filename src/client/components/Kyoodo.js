@@ -5,27 +5,29 @@ let Kyoodo = React.createClass({
   render: function() {
     return (
       <div
-        className='kyoodo'>
-        <div className='kyoodo__from'>
-          <div className='media-object'>
-            <div className='media-object-section'>
-              <div className='thumbnail'>
-                <img src={ this.props.from.src } />
+        className='columns kyoodo'>
+        <div className='row'>
+          <div className='medium-12 columns kyoodo__section kyoodo__from'>
+            <div className='media-object'>
+              <div className='media-object-section'>
+                <div className='thumbnail'>
+                  <img src={ this.props.from.avatar } />
+                </div>
+                <span>{ this.props.from.first_name } </span>
               </div>
-              <span>{ this.props.from.name }</span>
             </div>
           </div>
-        </div>
-        <div className='kyoodo_message'>
-          <p> { this.props.message } </p>
-        </div>
-        <div className='kyoodo__to'>
-          <div className='media-object'>
-            <div className='media-object-section'>
-              <div className='thumbnail'>
-                <img src={ this.props.to.src } />
+          <div className='medium-12 columns kyooodo__section kyoodo__message'>
+            <blockquote> { this.props.message } </blockquote>
+          </div>
+          <div className='medium-12 columns kyoodo__section kyoodo__to'>
+            <div className='media-object'>
+              <div className='media-object-section'>
+                <div className='thumbnail'>
+                  <img src={ this.props.to.avatar } />
+                </div>
+                <span>{ this.props.to.first_name }</span>
               </div>
-              <span>{ this.props.to.name }</span>
             </div>
           </div>
         </div>

@@ -6,7 +6,7 @@ import Body from  './components/Body';
 class App extends Component {
   render() {
     return (
-      <div>
+      <div className='kyoodos__wrapper'>
         <Header />
         <Body />
       </div>

@@ -5,6 +5,11 @@ export function getKyoodos(user_or_group_id=null) {
   }
 }
 
+export function getLastCreatedKyoodo() {
+  return {
+    type: 'KYOODOS_GET_LAST_CREATED'
+}
+
 export function postKyoodo(to, message) {
   return {
     type: 'KYOODOS_POST',
@@ -13,14 +18,14 @@ export function postKyoodo(to, message) {
   }
 }
 
-export function getUser(user_id) {
+export function getUser(user_id=null) {
   return {
     type: 'USER_GET',
     user_id
   }
 }
 
-export function getGroup(group_id) {
+export function getGroup(group_id=null) {
   return {
     type: 'GROUP_GET',
     user_id

@@ -31,6 +31,19 @@ h1 {
   float: right;
 }
 
+#root, .kyoodos__wrapper { height: 100%; }
+
+.kyoodos__header { 
+  border-bottom: 1px solid #dbdbdb;
+  background-color: #fff; 
+}
+.kyoodos__header .top-bar-right { text-align: right }
+
+.kyoodos__body { 
+  background-color: #fafafa;
+  height: 100%;
+}
+
 ul.kyoodos {
   margin: 0 auto;
   position: fixed;
@@ -48,4 +61,62 @@ ul.kyoodos li {
 
 ul.kyoodos li .avatar {
   border: 1px solid #ddd;
+}
+
+.svg {
+  height: 35px;
+  width: 35px;
+}
+.kyoodos__header__link { 
+  display: inline-block; 
+  margin: 15px;
+}
+.kyoodos__header__link {
+  background-size: contain;
+  -webkit-mask-size: cover;
+  mask-size: cover;
+  background-color: grey;
+}
+a .kyoodos__header__link:hover {
+  background-color: #dbdbdb;
+}
+.kyoodos__header__link.explore {
+  -webkit-mask: url(icons/compass.svg) no-repeat 100% 100%;
+  mask: url(icons/compass.svg) no-repeat 100% 100%;
+}
+.kyoodos__header__link.user{
+  -webkit-mask: url(icons/user-1.svg) no-repeat 100% 100%;
+  mask: url(icons/user-1.svg) no-repeat 100% 100%;
+}
+.kyoodos__header__link.like {
+  -webkit-mask: url(icons/like.svg) no-repeat 100% 100%;
+  mask: url(icons/like.svg) no-repeat 100% 100%;
+}
+.kyoodos__header__link.logo {
+  height: 35px;
+  width: 135px;
+  -webkit-mask: url(logo.png) no-repeat 100% 100%;
+  mask: url(logo.png) no-repeat 100% 100%;
+}
+
+.kyoodo {
+  display: block;
+  background-color: #edeeee;
+  margin: 15px;
+  min-width: 350px;
+  min-height: 350px;
+  position: relative;
+}
+
+.kyoodo:hover {
+  border: 1px solid #dbdbdb;
+  background-color: #dbdbdb;
+  opacity: 0.7;
+}
+.kyoodo__section { padding: 10px; }
+.kyoodo__from {
+  text-align: left;
+}
+.kyoodo__to{
+  text-align: right;
 }
