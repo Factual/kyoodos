@@ -10,14 +10,6 @@ export function getLastCreatedKyoodo() {
     type: 'KYOODOS_GET_LAST_CREATED'
 }
 
-export function postKyoodo(to, message) {
-  return {
-    type: 'KYOODOS_POST',
-    to,
-    message
-  }
-}
-
 export function getUser(user_id=null) {
   return {
     type: 'USER_GET',
