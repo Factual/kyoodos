@@ -9,8 +9,4 @@ export default function users(state=initialState, action) {
     default:
       return state
   }
-    
 }
-
-
-
