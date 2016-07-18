@@ -1,3 +1,6 @@
+// TODO: need to make a fetchUser (vs getUser) and fetchUserSuccess fn instead, and have
+// fetchUser use fetchApi
+
 import { API_ENDPOINTS } from './consts'
 import fetch from 'isomorphic-fetch'
 
