@@ -1,13 +1,11 @@
-export function getKyoodos(user_or_group_id=null) {
-  return {
-    type: 'KYOODOS_GET',
-    user_or_group_id
-  }
-}
+import { API_ENDPOINTS } from './consts'
+import fetch from 'isomorphic-fetch'
+
 
 export function getLastCreatedKyoodo() {
   return {
     type: 'KYOODOS_GET_LAST_CREATED'
+  }
 }
 
 export function getUser(user_id=null) {
@@ -24,6 +22,34 @@ export function getGroup(group_id=null) {
   }
 }
 
+export function fetchKyoodos(user_or_group_id=null) {
+  let url = API_ENDPOINTS['kyoodos'];
+  return fetchApi(url, fetchKyoodosSuccess)
+}
+
+function fetchKyoodosSuccess(data) {
+  return {
+    type: 'KYOODOS_FETCH_SUCCESS',
+    data
+  }
+}
+
+function fetchApi(url, cb) {
+  return dispatch => {
+    dispatch(fetchApiRequest(url))
+    return fetch(url)
+      .then(function(resp) {
+        if (resp.status >= 400) {
+          dispatch(fetchApiFailure(resp))
+        } else {
+          return resp.json()
+        }
+      }).then(function(data) {
+          dispatch(cb(data))
+      })
+  }
+}
+
 // api fetch helpers
 function fetchApiRequest(url) {
   return {
@@ -32,22 +58,9 @@ function fetchApiRequest(url) {
   }
 }
 
-function fetchApiSuccess(resp, api) {
-  return {
-    type: 'FETCH_API_SUCCESS',
-    resp,
-    api
-  }
-}
-
-function fetchApiFailure(ex) {
+function fetchApiFailure(err) {
   return {
     type: 'FETCH_API_FAILURE',
-    ex
-  }
-}
-
-export function fetchApi(path) {
-  return dispatch => {
+    err
   }
 }

@@ -1,32 +1,39 @@
 import React, { PropTypes } from 'react';
 import Kyoodo from './Kyoodo';
+import { fetchKyoodos, getUser } from '../actions'
+import { connect } from 'react-redux'
+
+const mapStateToProps = (state) => {
+  return {
+    kyoodos: state.kyoodos
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    loadKyoodos: () => {
+      dispatch(fetchKyoodos())
+    },
+    getUser: (user_id) => {
+      dispatch(getUser(user_id))
+    }
+  }
+}
 
 let Kyoodos = React.createClass({
-
+  componentWillMount: function() {
+    this.props.loadKyoodos();
+  },
   render: function() {
-    // TEMP - FAKE DATA
-    let avatar = "https://secure.gravatar.com/avatar/941911ea65854962a81c678f464897c1.jpg$1s=512&d=https%3A%2F%2Fa.slack-edge.com%2F7fa9%2Fimg%2Favatars%2Fava_0026-512.png"
     let kyoodos = []
-    let fakeData = [
-      {to: {first_name: 'yoda', avatar: avatar}, from: {first_name: 'luke', avatar: avatar }, message: 'If cartoon bluebirds were real, a bunch of them would be sitting on your shoulders singing right now.!'},
-      {to: {first_name: 'yoda', avatar: avatar}, from: {first_name: 'luke', avatar: avatar }, message: 'If cartoon bluebirds were real, a bunch of them would be sitting on your shoulders singing right now.!'},
-      {to: {first_name: 'yoda', avatar: avatar}, from: {first_name: 'luke', avatar: avatar }, message: 'If cartoon bluebirds were real, a bunch of them would be sitting on your shoulders singing right now.!'},
-      {to: {first_name: 'yoda', avatar: avatar}, from: {first_name: 'luke', avatar: avatar }, message: 'If cartoon bluebirds were real, a bunch of them would be sitting on your shoulders singing right now.!'},
-      {to: {first_name: 'yoda', avatar: avatar}, from: {first_name: 'luke', avatar: avatar }, message: 'If cartoon bluebirds were real, a bunch of them would be sitting on your shoulders singing right now.!'},
-      {to: {first_name: 'yoda', avatar: avatar}, from: {first_name: 'luke', avatar: avatar }, message: 'If cartoon bluebirds were real, a bunch of them would be sitting on your shoulders singing right now.!'},
-      {to: {first_name: 'yoda', avatar: avatar}, from: {first_name: 'luke', avatar: avatar }, message: 'If cartoon bluebirds were real, a bunch of them would be sitting on your shoulders singing right now.!'},
-      {to: {first_name: 'yoda', avatar: avatar}, from: {first_name: 'luke', avatar: avatar }, message: 'If cartoon bluebirds were real, a bunch of them would be sitting on your shoulders singing right now.!'},
-      {to: {first_name: 'yoda', avatar: avatar}, from: {first_name: 'luke', avatar: avatar }, message: 'If cartoon bluebirds were real, a bunch of them would be sitting on your shoulders singing right now.!'},
-      {to: {first_name: 'yoda', avatar: avatar}, from: {first_name: 'luke', avatar: avatar }, message: 'If cartoon bluebirds were real, a bunch of them would be sitting on your shoulders singing right now.!'},
-      {to: {first_name: 'yoda', avatar: avatar}, from: {first_name: 'luke', avatar: avatar }, message: 'If cartoon bluebirds were real, a bunch of them would be sitting on your shoulders singing right now.!'}
-    ]
-    if (this.props.kyoodos || fakeData) {
-      fakeData.forEach((k, i) => { // TODO: update to this.props.kyoodos
+    if (this.props.kyoodos) {
+      this.props.kyoodos.forEach((k) => {
+        // TODO: Get User info
         kyoodos.push (<Kyoodo
-                      key={i}
-                      to={k.to}
-                      from={k.from}
-                      message={k.message} />)
+                      key={k.id}
+                      to_user_id={k.to || "HELLO" }
+                      from_user_id ={k.from_user_id}
+                      content={k.content} />)
       })
 
       return (
@@ -45,5 +52,10 @@ let Kyoodos = React.createClass({
 Kyoodos.propTypes = {
   kyoodos: React.PropTypes.array
 }
+
+Kyoodos = connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Kyoodos)
 
 module.exports = Kyoodos

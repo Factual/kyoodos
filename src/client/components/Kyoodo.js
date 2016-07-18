@@ -11,22 +11,20 @@ let Kyoodo = React.createClass({
             <div className='media-object'>
               <div className='media-object-section'>
                 <div className='thumbnail'>
-                  <img src={ this.props.from.avatar } />
                 </div>
-                <span>{ this.props.from.first_name } </span>
+                <span>{ this.props.from_user_id } </span>
               </div>
             </div>
           </div>
           <div className='medium-12 columns kyooodo__section kyoodo__message'>
-            <blockquote> { this.props.message } </blockquote>
+            <blockquote> { this.props.content } </blockquote>
           </div>
           <div className='medium-12 columns kyoodo__section kyoodo__to'>
             <div className='media-object'>
               <div className='media-object-section'>
                 <div className='thumbnail'>
-                  <img src={ this.props.to.avatar } />
                 </div>
-                <span>{ this.props.to.first_name }</span>
+                <span>{ this.props.to_user_id }</span>
               </div>
             </div>
           </div>
@@ -37,9 +35,7 @@ let Kyoodo = React.createClass({
 })
 
 Kyoodo.propTypes = {
-  message: React.PropTypes.string,
-  to: React.PropTypes.object,
-  from: React.PropTypes.object
+  content: React.PropTypes.string
 }
 
 module.exports = Kyoodo
