@@ -1,33 +1,23 @@
 import React, { PropTypes } from 'react';
+import User from './User'
 
 // render a single kyoodo
 let Kyoodo = React.createClass({
   render: function() {
+    let receivers = [];
+    this.props.receivers.forEach((r) => {
+      receivers.push(<User key={ r.id } data={ r } />)
+    })
+
     return (
       <div
         className='columns kyoodo'>
         <div className='row'>
-          <div className='medium-12 columns kyoodo__section kyoodo__from'>
-            <div className='media-object'>
-              <div className='media-object-section'>
-                <div className='thumbnail'>
-                </div>
-                <span>{ this.props.from_user.id } </span>
-              </div>
-            </div>
-          </div>
+          <User data = { this.props.from_user } />
           <div className='medium-12 columns kyooodo__section kyoodo__message'>
             <blockquote> { this.props.content } </blockquote>
           </div>
-          <div className='medium-12 columns kyoodo__section kyoodo__to'>
-            <div className='media-object'>
-              <div className='media-object-section'>
-                <div className='thumbnail'>
-                  <span>{ this.props.receivers[0].id } </span> 
-                </div>
-              </div>
-            </div>
-          </div>
+          { receivers }
         </div>
       </div>
     )

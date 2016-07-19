@@ -26,7 +26,6 @@ let Kyoodos = React.createClass({
           let receivers = to_users.map((curr) => {
             return data.users[curr]
           })
-          debugger
           kyoodos.push(<Kyoodo key = { k.id }
                                from_user = { data.users[k.from_user_id] || 'unknown' }
                                receivers = { receivers }
