@@ -14,9 +14,9 @@ const mapDispatchToProps = (dispatch) => {
     loadKyoodos: () => {
       dispatch(fetchKyoodos())
     },
-    fetchUsers: (user_ids) => {
-      dispatch(fetchUsers(user_ids, cb))
-    }
+    fetchUsers: (user_ids, cb) => {
+      dispatch(fetchUsers(user_ids))
+    },
     getAllUsers: (user_ids) => {
       dispatch(fetchCachedUsers(user_id))
     }
@@ -43,7 +43,7 @@ let Kyoodos = React.createClass({
     if (this.props.kyoodos) {
       this.props.kyoodos.forEach((k) => {
         let to_users = this.parse(k)
-
+        debugger
         this.props.fetchUsers([...to_users, k.from_user_id], function(resp) {
           let all_users = this.props.getAllUsers(),
               from_user = all_users[k.from_user_id]

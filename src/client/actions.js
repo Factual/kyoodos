@@ -8,13 +8,13 @@ export function getLastCreatedKyoodo() {
   }
 }
 
-export function fetchUsers(user_ids=null) {
+export function fetchUsers(user_ids, cb) {
   let url = API_ENDPOINTS['users_in_list']
   // TO DO - get users from list of users
   if (user_id) {
     url += '/' + user_id
   }
-  return fetchApi(url, fetchUserSuccess)
+  return fetchApi(url, cb)
 }
 
 export function fetchUserSuccess(data) {
