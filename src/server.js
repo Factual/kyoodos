@@ -27,13 +27,8 @@ app.get('/api/kyoodos', function(req, res, next) {
 app.get('/api/users', function(req, res, next) {
   User.findAll().then(resJson(res)).catch(next);
 })
-app.get('/api/users/:id', function(req, res, next) {
-  User.find(req.params.id).then(resJson(res)).catch(next);
-})
-
-// ex: http://localhost:3000/api/users_in_list/U1ESGNFBP,U1F05HJK1
-app.get('/api/users_in_list/:ids', function(req, res, next) {
-  User.findInArray(req.params.ids).then(resJson(res)).catch(next);
+app.get('/api/users/:ids', function(req, res, next) {
+  User.find(req.params.ids).then(resJson(res)).catch(next);
 })
 
 var server = app.listen(3000, function() {

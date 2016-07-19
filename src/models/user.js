@@ -9,27 +9,27 @@ findAll = function (limit) {
   return conn.execute(sql.toString());
 }
 
-find = function (id) {
-  var sql = squel.select()
-                 .from('slack_users')
-                 .where('id=?', id);
+find = function (ids) {
+  var ids_list = ids.split(','),
+      sql;
 
-  return conn.execute(sql.toString()).then(function (rows) {
-    return rows[0];
-  });
-}
+  if (ids_list.length == 1) {
+    sql = squel.select()
+                   .from('slack_users')
+                   .where('id=?', ids_list[0]);
 
-findInArray = function (ids) {
-  var list = ids.split(',')
-  var sql = squel.select()
-                 .from('slack_users')
-                 .where('id IN ?', list);
-
-  return conn.execute(sql.toString());
+    return conn.execute(sql.toString()).then(function (rows) {
+      return rows[0];
+    });
+  } else {
+    sql = squel.select()
+                   .from('slack_users')
+                   .where('id in ?', ids_list);
+    return conn.execute(sql.toString());
+  }
 }
 
 module.exports = {
   findAll: findAll,
-  findInArray: findInArray,
   find: find
 }
