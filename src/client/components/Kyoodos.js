@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import Kyoodo from './Kyoodo';
 import { getKyoodosAndUsers } from '../actions'
 import { connect } from 'react-redux'
+import { parseKyoodo } from '../utils'
 
 const mapStateToProps = (state) => {
   return {
@@ -20,8 +21,15 @@ let Kyoodos = React.createClass({
       if (data.kyoodos.length > 0 && Object.keys(data.users).length > 0) {
         let kyoodos = []
         data.kyoodos.forEach((k) => {
+          let to_users = parseKyoodo(k)
+
+          let receivers = to_users.map((curr) => {
+            return data.users[curr]
+          })
+          debugger
           kyoodos.push(<Kyoodo key = { k.id }
                                from_user = { data.users[k.from_user_id] || 'unknown' }
+                               receivers = { receivers }
                                content = { k.content } />)
         })
         return (

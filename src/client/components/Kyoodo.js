@@ -11,8 +11,6 @@ let Kyoodo = React.createClass({
             <div className='media-object'>
               <div className='media-object-section'>
                 <div className='thumbnail'>
-                // TODO: put back the thumbnail image, change props of from_user and to_user from string
-                // to object (after calling DB with user )
                 </div>
                 <span>{ this.props.from_user.id } </span>
               </div>
@@ -25,6 +23,7 @@ let Kyoodo = React.createClass({
             <div className='media-object'>
               <div className='media-object-section'>
                 <div className='thumbnail'>
+                  <span>{ this.props.receivers[0].id } </span> 
                 </div>
               </div>
             </div>
