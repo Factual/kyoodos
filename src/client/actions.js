@@ -8,13 +8,13 @@ export function getLastCreatedKyoodo() {
   }
 }
 
-export function fetchUsers(user_ids, cb) {
-  let url = API_ENDPOINTS['users_in_list']
+export function fetchUsers(user_id, cb) {
+  let url = API_ENDPOINTS['users']
   // TO DO - get users from list of users
   if (user_id) {
     url += '/' + user_id
   }
-  return fetchApi(url, cb)
+  return fetchApi(url, fetchUserSuccess, cb)
 }
 
 export function fetchUserSuccess(data) {
@@ -31,9 +31,9 @@ export function getGroup(group_id=null) {
   }
 }
 
-export function fetchKyoodos(user_or_group_id=null) {
+export function fetchKyoodos(cb) {
   let url = API_ENDPOINTS['kyoodos'];
-  return fetchApi(url, fetchKyoodosSuccess)
+  return fetchApi(url, fetchKyoodosSuccess, cb)
 }
 
 function fetchKyoodosSuccess(data) {
@@ -43,7 +43,7 @@ function fetchKyoodosSuccess(data) {
   }
 }
 
-function fetchApi(url, cb) {
+function fetchApi(url, successFn, cb) {
   return dispatch => {
     dispatch(fetchApiRequest(url))
     return fetch(url)
@@ -54,7 +54,8 @@ function fetchApi(url, cb) {
           return resp.json()
         }
       }).then(function(data) {
-          dispatch(cb(data))
+        cb(data);
+        dispatch(successFn(data))
       })
   }
 }

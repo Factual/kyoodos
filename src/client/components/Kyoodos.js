@@ -1,24 +1,22 @@
 import React, { PropTypes } from 'react';
 import Kyoodo from './Kyoodo';
-import { fetchKyoodos, fetchUsers, fetchCachedUsers } from '../actions'
+import { fetchKyoodos, fetchUsers } from '../actions'
 import { connect } from 'react-redux'
 
 const mapStateToProps = (state) => {
   return {
-    kyoodos: state.kyoodos
+    kyoodos: state.kyoodos,
+    users: state.users
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    loadKyoodos: () => {
-      dispatch(fetchKyoodos())
+    fetchKyoodos: (cb) => {
+      dispatch(fetchKyoodos(cb))
     },
-    fetchUsers: (user_ids, cb) => {
-      dispatch(fetchUsers(user_ids))
-    },
-    getAllUsers: (user_ids) => {
-      dispatch(fetchCachedUsers(user_id))
+    fetchUsers: (user_id, cb) => {
+      dispatch(fetchUsers(user_id, cb))
     }
   }
 }
@@ -26,7 +24,9 @@ const mapDispatchToProps = (dispatch) => {
 
 let Kyoodos = React.createClass({
   componentWillMount: function() {
-    this.props.loadKyoodos();
+    this.props.fetchKyoodos((data) => {
+      console.log('111', data)
+    })
   },
   parse: function(kyoodo) {
     var res = {},
@@ -42,17 +42,18 @@ let Kyoodos = React.createClass({
     let kyoodos = []
     if (this.props.kyoodos) {
       this.props.kyoodos.forEach((k) => {
-        let to_users = this.parse(k)
-        debugger
-        this.props.fetchUsers([...to_users, k.from_user_id], function(resp) {
-          let all_users = this.props.getAllUsers(),
-              from_user = all_users[k.from_user_id]
+        let to_users = this.parse(k),
+            receivers = {}
 
-          kyoodos.push (<Kyoodo
-                        key={ k.id }
-                        from_user={ from_user }
-                        content={ k.content } />)
-        })
+        let user_ids = to_users.join(',') + ',' + k.from_user_id
+        debugger
+        this.props.fetchUsers(user_ids, (data) => {
+          console.log(2222222222, data)
+          kyoodos.push(<Kyoodos key={ k.id }
+                       from_user = { from_user }
+                       content = { k.content } />)
+          })
+
       })
 
       return (
