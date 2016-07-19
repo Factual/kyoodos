@@ -1,81 +1,48 @@
 import React, { PropTypes } from 'react';
 import Kyoodo from './Kyoodo';
-import { fetchKyoodos, fetchUsers } from '../actions'
+import { getKyoodosAndUsers } from '../actions'
 import { connect } from 'react-redux'
 
 const mapStateToProps = (state) => {
   return {
-    kyoodos: state.kyoodos,
-    users: state.users
+    kyoodos: state.kyoodos
   }
 }
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    fetchKyoodos: (cb) => {
-      dispatch(fetchKyoodos(cb))
-    },
-    fetchUsers: (user_id, cb) => {
-      dispatch(fetchUsers(user_id, cb))
-    }
-  }
-}
-
 
 let Kyoodos = React.createClass({
   componentWillMount: function() {
-    this.props.fetchKyoodos((data) => {
-      console.log('111', data)
+    this.props.getKyoodosAndUsers().then(() => {
     })
   },
-  parse: function(kyoodo) {
-    var res = {},
-        users = {},
-        matches = kyoodo.content.match(/<@.{9}>/g) || [],
-        receiverIds = matches.map(function (m) {
-          return m.match(/<@(.{9})>/)[1];
-        }),
-        userIds = receiverIds.concat([kyoodo.from_user_id]);
-    return userIds
-  },
   render: function() {
-    let kyoodos = []
-    if (this.props.kyoodos) {
-      this.props.kyoodos.forEach((k) => {
-        let to_users = this.parse(k),
-            receivers = {}
-
-        let user_ids = to_users.join(',') + ',' + k.from_user_id
-        debugger
-        this.props.fetchUsers(user_ids, (data) => {
-          console.log(2222222222, data)
-          kyoodos.push(<Kyoodos key={ k.id }
-                       from_user = { from_user }
-                       content = { k.content } />)
-          })
-
-      })
-
-      return (
-        <div
-          className='row medium-unstack kyoodos'>
-          { kyoodos }
-        </div>
-      )
+    let data = this.props.kyoodos.state
+    if (data) {
+      if (data.kyoodos.length > 0 && Object.keys(data.users).length > 0) {
+        let kyoodos = []
+        data.kyoodos.forEach((k) => {
+          kyoodos.push(<Kyoodo key = { k.id }
+                               from_user = { data.users[k.from_user_id] || 'unknown' }
+                               content = { k.content } />)
+        })
+        return (
+          <div className='row medium-unstack kyoodos'>
+            { kyoodos }
+          </div>
+        )
+      }
     } else {
       return (<div className='kyoodos'>No kyoodos found :( </div>)
     }
   }
-
 })
 
 Kyoodos.propTypes = {
-  kyoodos: React.PropTypes.array
+  kyoodos: React.PropTypes.object
 }
 
 Kyoodos = connect(
     mapStateToProps,
-    mapDispatchToProps
+    { getKyoodosAndUsers }
 )(Kyoodos)
 
 module.exports = Kyoodos

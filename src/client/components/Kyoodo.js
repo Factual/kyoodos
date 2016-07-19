@@ -26,7 +26,6 @@ let Kyoodo = React.createClass({
               <div className='media-object-section'>
                 <div className='thumbnail'>
                 </div>
-                <span>{ this.props.to_user.id }</span>
               </div>
             </div>
           </div>
