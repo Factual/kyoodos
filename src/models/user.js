@@ -19,7 +19,17 @@ find = function (id) {
   });
 }
 
+findInArray = function (ids) {
+  var list = ids.split(',')
+  var sql = squel.select()
+                 .from('slack_users')
+                 .where('id IN ?', list);
+
+  return conn.execute(sql.toString());
+}
+
 module.exports = {
   findAll: findAll,
+  findInArray: findInArray,
   find: find
 }

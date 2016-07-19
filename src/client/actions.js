@@ -1,6 +1,3 @@
-// TODO: need to make a fetchUser (vs getUser) and fetchUserSuccess fn instead, and have
-// fetchUser use fetchApi
-
 import { API_ENDPOINTS } from './consts'
 import fetch from 'isomorphic-fetch'
 
@@ -11,10 +8,19 @@ export function getLastCreatedKyoodo() {
   }
 }
 
-export function getUser(user_id=null) {
+export function fetchUsers(user_ids=null) {
+  let url = API_ENDPOINTS['users_in_list']
+  // TO DO - get users from list of users
+  if (user_id) {
+    url += '/' + user_id
+  }
+  return fetchApi(url, fetchUserSuccess)
+}
+
+export function fetchUserSuccess(data) {
   return {
-    type: 'USER_GET',
-    user_id
+    type: 'USERS_FETCH_SUCCESS',
+    data
   }
 }
 
