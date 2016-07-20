@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import Kyoodo from './Kyoodo';
 import { getKyoodosAndUsers } from '../actions'
 import { connect } from 'react-redux'
-import { parseKyoodo } from '../utils'
+import { getUsersFromKyoodo } from '../utils'
 
 const mapStateToProps = (state) => {
   return {
@@ -21,7 +21,8 @@ let Kyoodos = React.createClass({
       if (data.kyoodos.length > 0 && Object.keys(data.users).length > 0) {
         let kyoodos = []
         data.kyoodos.forEach((k) => {
-          let to_users = parseKyoodo(k)
+          let users = getUsersFromKyoodo(k)
+          let to_users = users.filter(function(u) { return u != k.from_user_id })
 
           let receivers = to_users.map((curr) => {
             return data.users[curr]

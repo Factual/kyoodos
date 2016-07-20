@@ -8,7 +8,7 @@ let User = React.createClass({
         <div className='media-object'>
           <div className='media-object-section column'>
             <div>
-              <img className='thumbnail' height='75' width='75' src={ this.props.data.avatar } />
+              <img className='avatar thumbnail' height='75' width='75' src={ this.props.data.avatar } />
               <span>{ this.props.data.first_name }</span>
             </div>
           </div>

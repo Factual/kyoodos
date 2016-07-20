@@ -41,6 +41,7 @@
             res.receivers[id] = users[id];
           });
           var foobar = kyoodo.content.split(/((?:<@.{9}>)|(?::[^: ]+:))/);
+          console.log('foo', foobar);
           res.message = foobar.map(function (x) {
             if (x.match(/<@.{9}>/)) {
               var id = x.match(/<@(.{9})>/)[1];
