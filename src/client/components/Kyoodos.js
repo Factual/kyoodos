@@ -30,6 +30,7 @@ let Kyoodos = React.createClass({
           kyoodos.push(<Kyoodo key = { k.id }
                                from_user = { data.users[k.from_user_id] || 'unknown' }
                                receivers = { receivers }
+                               users = { data.users }
                                content = { k.content } />)
         })
         return (

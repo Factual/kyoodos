@@ -1,3 +1,5 @@
+import { emojiPosition } from './slack-emoji'
+
 export function parseKyoodos(kyoodosArr) {
   let user_ids = {}
   kyoodosArr.forEach((kyoodo) => {
@@ -22,7 +24,7 @@ export function getUsersFromKyoodo(kyoodo) {
 
 export function parseKyoodoContent(content) {
     let foobar = content.split(/((?:<@.{9}>)|(?::[^: ]+:))/);
-    let message = foobar.map(function (x) {
+    let message = foobar.map((x) => {
       if (x.match(/<@.{9}>/)) {
         var id = x.match(/<@(.{9})>/)[1];
         x = {
