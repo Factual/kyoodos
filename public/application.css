@@ -99,13 +99,22 @@ a .kyoodos__header__link:hover {
   mask: url(logo.png) no-repeat 100% 100%;
 }
 
+.kyoodos { text-align: center }
+
 .kyoodo {
+  animation: fadeinout 4s linear forwards;
+  opacity: 1;
   display: block;
   background-color: #edeeee;
   margin: 15px;
   min-width: 350px;
   min-height: 350px;
   position: relative;
+}
+
+@keyframes fadeinout {
+  0%,100% { opacity: 0; }
+  50% { opacity: 1; }
 }
 
 .kyoodo:hover {

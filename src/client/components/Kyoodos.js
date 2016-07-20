@@ -10,10 +10,25 @@ const mapStateToProps = (state) => {
   }
 }
 
-let Kyoodos = React.createClass({
+let SetIntervalMixin = {
   componentWillMount: function() {
-    this.props.getKyoodosAndUsers().then(() => {
-    })
+    this.intervals = [];
+  },
+  setInterval: function() {
+    this.intervals.push(setInterval.apply(null, arguments));
+  },
+  componentWillUnmount: function() {
+    this.intervals.forEach(clearInterval);
+  }
+}
+
+let Kyoodos = React.createClass({
+  mixins: [SetIntervalMixin], // Use the mixin
+  componentWillMount: function() {
+    this.props.getKyoodosAndUsers();
+  },
+  componentDidMount: function() {
+    this.setInterval(this.props.getKyoodosAndUsers, 10000)
   },
   render: function() {
     let data = this.props.kyoodos.state
@@ -40,7 +55,7 @@ let Kyoodos = React.createClass({
         )
       }
     } else {
-      return (<div className='kyoodos'>No kyoodos found :( </div>)
+      return (<div className='kyoodos'>...</div>)
     }
   }
 })
