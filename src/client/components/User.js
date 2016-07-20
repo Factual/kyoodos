@@ -4,15 +4,9 @@ import React, { PropTypes } from 'react';
 let User = React.createClass({
   render: function() {
     return (
-      <div className='medium-12 columns kyoodo__section kyoodo__to'>
-        <div className='media-object'>
-          <div className='media-object-section column'>
-            <div>
-              <img className='avatar thumbnail' height='75' width='75' src={ this.props.data.avatar } />
-              <span>{ this.props.data.first_name }</span>
-            </div>
-          </div>
-        </div>
+      <div className='column'>
+        <img className='avatar thumbnail' height='75' width='75' src={ this.props.data.avatar } />
+        <span className='user_name'>{ this.props.data.first_name }</span>
       </div>
     )
   }

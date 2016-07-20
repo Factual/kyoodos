@@ -11,8 +11,9 @@ export default function kyoodos(state=initialState, action) {
     case 'KYOODOS_FETCH_ERROR':
       return state
     case 'KYOODOS_FETCH_SUCCESS':
+        // TODO: prevent duplicates from entering ...... :( !
       return {
-        kyoodos: [...state.kyoodos, ...action.data],
+        kyoodos: [...action.data],
         users: state.users
       }
     case 'USERS_FETCH_SUCCESS':

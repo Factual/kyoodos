@@ -114,9 +114,17 @@ a .kyoodos__header__link:hover {
   opacity: 0.7;
 }
 .kyoodo__section { padding: 10px; }
+.kyoodo__section .user_name {
+  color: grey;
+  font-size: 11px;
+  display: block;
+  bottom: 50%;
+}
 .kyoodo__from {
   text-align: left;
 }
 .kyoodo__to{
-  text-align: right;
+  position: absolute;
+  bottom: 0;
+  right: 0;
 }

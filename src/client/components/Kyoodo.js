@@ -16,11 +16,15 @@ let Kyoodo = React.createClass({
       <div
         className='columns kyoodo'>
         <div className='row'>
-          <User data = { this.props.from_user } />
+          <div className='medium-12 columns kyoodo__section kyoodo__from'>
+            <User data = { this.props.from_user } />
+          </div>
           <div className='medium-12 columns kyooodo__section kyoodo__message'>
             <Message users={this.props.users} message={ this.props.content } />
           </div>
-          { receivers }
+          <div className='medium-12 row kyoodo__section kyoodo__to'>
+            { receivers }
+          </div>
         </div>
       </div>
     )
