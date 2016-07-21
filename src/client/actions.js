@@ -18,7 +18,7 @@ export function getKyoodos() {
   }
 }
 
-export function getAllusers() {
+export function getAllUsers() {
   return (dispatch) => {
     dispatch({ type: 'USERS_FETCH' })
     return fetchAllUsers().then(function(resp) {

@@ -1,7 +1,8 @@
 
 const initialState = {
   kyoodos: [],
-  users: {}
+  users: {},
+  allUsers: {}
 }
 
 export default function data(state=initialState, action) {
@@ -11,11 +12,19 @@ export default function data(state=initialState, action) {
     case 'KYOODOS_FETCH_ERROR':
       return state
     case 'KYOODOS_FETCH_SUCCESS':
-        // TODO: prevent duplicates from entering ...... :( !
       return {
         kyoodos: [...action.data],
+        allUsers: state.allUsers,
         users: state.users
       }
+    case 'USERS_FETCH_ALL_SUCCESS':
+      return {
+        kyoodos: state.kyoodos,
+        allUsers: action.data,
+        users: state.users
+      }
+    case 'USERS_FETCH_ERROR':
+      return state
     case 'USERS_FETCH_SUCCESS':
       let updatedUsers;
       if (action.data) {
@@ -25,7 +34,8 @@ export default function data(state=initialState, action) {
         }, state.users)
       }
       return {
-        state: state,
+        kyoodos: state.kyoodos,
+        allUsers: state.allUsers,
         users: updatedUsers ? updatedUsers : state.users
       }
     case 'USERS_FETCH_CACHED':
