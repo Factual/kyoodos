@@ -3,7 +3,9 @@ var squel = require("squel").useFlavour('postgres');
 
 findAll = function (limit) {
   var sql = squel.select()
-                 .from('kyoodos');
+                 .from('kyoodos')
+                 .order('created_at', false);
+
   if (limit) sql = sql.limit(limit);
 
   return conn.execute(sql.toString());

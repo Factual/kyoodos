@@ -1,6 +1,6 @@
 h1 {
   font-family: 'Open Sans', sans-serif;
-  font-weight: 700; 
+  font-weight: 700;
 }
 .page-header {
   text-align: center;
@@ -33,13 +33,13 @@ h1 {
 
 #root, .kyoodos__wrapper { height: 100%; }
 
-.kyoodos__header { 
+.kyoodos__header {
   border-bottom: 1px solid #dbdbdb;
-  background-color: #fff; 
+  background-color: #fff;
 }
 .kyoodos__header .top-bar-right { text-align: right }
 
-.kyoodos__body { 
+.kyoodos__body {
   background-color: #fafafa;
   height: 100%;
 }
@@ -54,7 +54,7 @@ ul.kyoodos li {
   list-style: none;
   padding: 1em;
   font-family: 'Open Sans', sans-serif;
-  font-weight: 300;  
+  font-weight: 300;
   font-size: 0.9em;
   float: left;
 }
@@ -67,8 +67,8 @@ ul.kyoodos li .avatar {
   height: 35px;
   width: 35px;
 }
-.kyoodos__header__link { 
-  display: inline-block; 
+.kyoodos__header__link {
+  display: inline-block;
   margin: 15px;
 }
 .kyoodos__header__link {
@@ -102,7 +102,7 @@ a .kyoodos__header__link:hover {
 .kyoodos { text-align: center }
 
 .kyoodo {
-  animation: fadeinout 4s ease-in-out forwards;
+  animation: fadeout 2s ease-in-out forwards;
   opacity: 1;
   display: block;
   background-color: #edeeee;
