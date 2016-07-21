@@ -6,7 +6,7 @@ import { getUsersFromKyoodo } from '../utils'
 
 const mapStateToProps = (state) => {
   return {
-    kyoodos: state.kyoodos
+    data: state.data
   }
 }
 
@@ -31,7 +31,7 @@ let Kyoodos = React.createClass({
     this.setInterval(this.props.getKyoodosAndUsers, 10000)
   },
   render: function() {
-    let data = this.props.kyoodos.state
+    let data = this.props.data.state
     if (data) {
       if (data.kyoodos.length > 0 && Object.keys(data.users).length > 0) {
         let kyoodos = []

@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux'
-import kyoodos from './kyoodos'
+import data from './kyoodos'
 
 let rootReducer = combineReducers({
-    kyoodos
+    data
 })
 export default rootReducer

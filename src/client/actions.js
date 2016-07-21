@@ -19,24 +19,31 @@ export function getKyoodos() {
 }
 
 export function getUsers(user_ids) {
-  return dispatch => {
+  return (dispatch, getState) => {
     dispatch({ type: 'USERS_FETCH' })
-    return fetchUsers(user_ids).then(function(resp) {
-       if (resp.status >= 400) {
-          dispatch({ type: 'USERS_FETCH_ERROR', error })
-       } else {
-         return resp.json()
-       }
-    }).then(function(data) {
-      dispatch({ type: 'USERS_FETCH_SUCCESS', data })
-    })
+    const cachedUsers = Object.keys(getState().data.users)
+
+    let uncachedUsers = user_ids.filter((uid) => { return cachedUsers.indexOf(uid) < 0 })
+    if (uncachedUsers.length > 0) {
+      return fetchUsers(user_ids).then(function(resp) {
+         if (resp.status >= 400) {
+            dispatch({ type: 'USERS_FETCH_ERROR', error })
+         } else {
+           return resp.json()
+         }
+      }).then(function(data) {
+        dispatch({ type: 'USERS_FETCH_SUCCESS', data })
+      })
+    } else {
+      dispatch({ type: 'USERS_FETCH_SUCCESS', cachedUsers})
+    }
   }
 }
 
 export function getKyoodosAndUsers() {
   return (dispatch, getState) => {
     return dispatch(getKyoodos()).then(() => {
-      const fetchedKyoodos = getState().kyoodos.kyoodos
+      const fetchedKyoodos = getState().data.kyoodos
       const userIds = parseKyoodos(fetchedKyoodos) // returns an array of ids
       return dispatch(getUsers(userIds))
     })
@@ -62,4 +69,3 @@ function fetchKyoodos() {
   let url = API_ENDPOINTS['kyoodos'];
   return fetch(url)
 }
-
