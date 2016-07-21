@@ -7,7 +7,6 @@ var query = (function() {
   // make API call
   var _getUserInfo = function(id, cb) {
     var user = slackAPI.getUser(id, function(resp) {
-      console.log(111, resp);
       if (resp.ok) {
         cb(resp.user);
       } else {
@@ -18,7 +17,7 @@ var query = (function() {
 
   var getUserFromDB = function(id) {
     var q = squel.select()
-                         .from("slack_users")  
+                         .from("slack_users")
                          .where("id = ?", id)
                          .toString()
 

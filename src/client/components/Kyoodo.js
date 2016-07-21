@@ -8,8 +8,8 @@ import { parseKyoodoContent } from '../utils'
 let Kyoodo = React.createClass({
   render: function() {
     let receivers = [];
-    this.props.receivers.forEach((r) => {
-      receivers.push(<UserAvatar key={ r.id } data={ r } />)
+    this.props.receivers.forEach((r, id) => {
+      receivers.push(<UserAvatar key={ id } data={ r } />)
     })
 
     return (
@@ -17,7 +17,7 @@ let Kyoodo = React.createClass({
         className='columns kyoodo'>
         <div className='row'>
           <div className='medium-12 columns kyoodo__section kyoodo__from'>
-            <UserAvatar data = { this.props.from_user } />
+            <UserAvatar data={ this.props.from_user } />
           </div>
           <div className='medium-12 columns kyooodo__section kyoodo__message'>
             <Message users={this.props.users} message={ this.props.content } />
