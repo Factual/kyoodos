@@ -3,10 +3,16 @@ import React, { PropTypes } from 'react';
 // render a user with avatar
 let User = React.createClass({
   render: function() {
+    let data = this.props.data
+    let imageStyle = {
+      backgroundImage: "url('" + data.avatar.replace('$1', '?') + "')",
+      backgroundSize: 'contain'
+    }
+
     return (
       <div className='column'>
-        <img className='avatar thumbnail' height='75' width='75' src={ this.props.data.avatar } />
-        <span className='user_name'>{ this.props.data.first_name }</span>
+        <span className='avatar thumbnail' height='75' width='75' style={ imageStyle } />
+        <span className='user_name'>{ data.first_name }</span>
       </div>
     )
   }

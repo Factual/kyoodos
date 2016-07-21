@@ -7,6 +7,7 @@ var query = (function() {
   // make API call
   var _getUserInfo = function(id, cb) {
     var user = slackAPI.getUser(id, function(resp) {
+      console.log(111, resp);
       if (resp.ok) {
         cb(resp.user);
       } else {
@@ -38,29 +39,35 @@ var query = (function() {
 
   // saves to DB and returns cleaned user opts
   var _saveUserToDB = function(userHash) {
+
+    var avatar = userHash.profile.image_72 ||
+      userHash.profile.image_192 ||
+      userHash.profile.image_512 || ""
+    // cannot stop squel converting ? to $1 :((
+    // avatar = avatar.replace(/\?/, '[?]')
+
     var q = squel.insert()
-                         .into("slack_users")
-                         .set("id", userHash.id)
-                         .set("first_name", userHash.profile.first_name)
-                         .set("last_name", userHash.profile.last_name)
-                         .set("email", userHash.profile.email)
-                         .set("avatar", userHash.profile.image_512 ||
-                                        userHash.profile.image_192 ||
-                                        userHash.profile.image_72 || "")
-                         .toString()
+      .into("slack_users")
+      .set("id", userHash.id)
+      .set("first_name", userHash.profile.first_name)
+      .set("last_name", userHash.profile.last_name)
+      .set("username", userHash.name)
+      .set("email", userHash.profile.email)
+      .set("avatar", avatar)
+      .toString()
     return conn.execute(q);
   }
 
   var _saveKudoToDB = function(message) {
     var q = squel.insert()
-                         .into("kyoodos")
-                         .set("from_user_id", message.from_user_id)
-                         .set("content_raw", message.content_raw)
-                         .set("content", message.content)
-                         .set("created_at",
-                              "to_timestamp(" + message.created_at + ")",
-                              { dontQuote: true })
-                         .toString()
+      .into("kyoodos")
+      .set("from_user_id", message.from_user_id)
+      .set("content_raw", message.content_raw)
+      .set("content", message.content)
+      .set("created_at",
+          "to_timestamp(" + message.created_at + ")",
+          { dontQuote: true })
+    .toString()
     return conn.execute(q)
       .then(function(postedData) {
         return postedData;

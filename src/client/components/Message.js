@@ -16,7 +16,7 @@ let Message = React.createClass({
         messageArray.map((m, i) => {
           if (typeof(m) == 'object') {
             if (m.type == 'user') {
-              return (<span key={i} className='user' title={ "@" + m.id }> { this.props.users[m.id].first_name }</span>)
+              return (<span key={i} className='user' title={ "@" + m.id }> @{ this.props.users[m.id].username }</span>)
             } 
             if (m.type == 'emoji') {
               return ( 
