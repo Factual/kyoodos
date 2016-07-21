@@ -1,25 +1,28 @@
-import React, { PropTypes } from 'react';
+import React, { PropTypes } from 'react'
+import UserAvatar from '../components/UserAvatar'
 
-// render a user with avatar
 let User = React.createClass({
   render: function() {
-    let data = this.props.data
-    let imageStyle = {
-      backgroundImage: "url('" + data.avatar.replace('$1', '?') + "')",
-      backgroundSize: 'contain'
-    }
-
     return (
-      <div className='column'>
-        <span className='avatar thumbnail' height='75' width='75' style={ imageStyle } />
-        <span className='user_name'>{ data.first_name }</span>
+      <div className='columns kyoodo'>
+        <div className='row'>
+          <div className='medium-12 columns kyoodo__section kyoodo__from'>
+            <UserAvatar data = { this.props.data } />
+          </div>
+          <div className='medium-12 columns kyoodo__section'>
+            <div>Name: { this.props.username } </div>
+            <div>Kyoodos sent: { this.props.data.count_of_sent_kyoodos } </div>
+            <div>Last received kyoodo: </div>
+            <div>Last sent kyoodo: </div>
+          </div>
+        </div>
       </div>
     )
   }
 })
 
 User.propTypes = {
-  data: React.PropTypes.object.isRequired
+  data: React.PropTypes.object
 }
 
 module.exports = User

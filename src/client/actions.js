@@ -18,6 +18,21 @@ export function getKyoodos() {
   }
 }
 
+export function getAllUsers() {
+  return (dispatch) => {
+    dispatch({ type: 'USERS_FETCH' })
+    return fetchUsers().then(function(resp) {
+      if (resp.status >= 400) {
+        dispatch({ type: 'USERS_FETCH_ERROR', error })
+      } else {
+        return resp.json()
+      }
+    }).then(function(data) {
+      dispatch({ type: 'USERS_FETCH_ALL_SUCCESS', data})
+    })
+  }
+}
+
 export function getUsers(user_ids) {
   return (dispatch, getState) => {
     dispatch({ type: 'USERS_FETCH' })
