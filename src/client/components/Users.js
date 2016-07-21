@@ -24,12 +24,17 @@ let Users = React.createClass({
   render: function() {
     let users = []
     Object.keys(this.props.users).forEach((uID) => {
-      users.push(<User key={ uID } data= { this.props.users[uID] } />)
+      users.push(
+        <User key={ uID } data= { this.props.users[uID] } />
+      )
     })
 
     return (
-      <div className='row medium-unstack'>
-        { users }
+      <div className='row'>
+        <h3>Users</h3>
+        <div className='row medium-unstack'>
+          { users }
+        </div>
       </div>
     )
   }
