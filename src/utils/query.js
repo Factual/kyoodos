@@ -56,20 +56,27 @@ var query = (function() {
       .toString()
     return conn.execute(q);
   }
-
   var _saveKudoToDB = function(message) {
-    var q = squel.insert()
-      .into("kyoodos")
-      .set("from_user_id", message.from_user_id)
-      .set("content_raw", message.content_raw)
-      .set("content", message.content)
-      .set("created_at",
-          "to_timestamp(" + message.created_at + ")",
-          { dontQuote: true })
-    .toString()
-    return conn.execute(q)
+    var kyoodo_id_q = squel.select().field("nextval('kyoodo_id_seq')").toString()
+
+    var query = function(kyoodo_id) {
+      var q = squel.insert()
+              .into("kyoodos")
+              .set("id", kyoodo_id)
+              .set("from_user_id", message.from_user_id)
+              .set("content_raw", message.content_raw)
+              .set("content", message.content)
+              .set("created_at",
+                  "to_timestamp(" + message.created_at + ")",
+                  { dontQuote: true })
+              .toString()
+      return q
+    }
+
+    return conn.execute(kyoodo_id_q)
       .then(function(postedData) {
-        return postedData;
+        kyoodo_id = postedData.length > 0 ? postedData[0].nextval : null
+        conn.execute(query(kyoodo_id))
       }).catch(function(err) {
         throw err;
       })
