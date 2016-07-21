@@ -59,7 +59,17 @@ var query = (function() {
   var _saveKudoToDB = function(message) {
     var kyoodo_id_q = squel.select().field("nextval('kyoodo_id_seq')").toString()
 
-    var query = function(kyoodo_id) {
+    var _saveReceivers = function(receiver, kyoodo_id) {
+      var q = squel.insert()
+                    .into("kyoodos_receivers")
+                    .set("to_user_id", receiver)
+                    .set("kyoodo_id", kyoodo_id)
+                    .toString()
+
+      return conn.execute(q);
+    }
+
+    var saveKudoQuery = function(kyoodo_id) {
       var q = squel.insert()
               .into("kyoodos")
               .set("id", kyoodo_id)
@@ -76,7 +86,15 @@ var query = (function() {
     return conn.execute(kyoodo_id_q)
       .then(function(postedData) {
         kyoodo_id = postedData.length > 0 ? postedData[0].nextval : null
-        conn.execute(query(kyoodo_id))
+        to_users_list = parser.parseToUsers(message.content)
+
+        // save kudo
+        conn.execute(saveKudoQuery(kyoodo_id))
+        // populate kudos_receivers table
+        for(var i=0; i<to_users_list.length; i++) {
+          _saveReceivers(to_users_list[i], kyoodo_id)
+        }
+
       }).catch(function(err) {
         throw err;
       })
