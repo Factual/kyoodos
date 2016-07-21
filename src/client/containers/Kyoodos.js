@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import Kyoodo from './Kyoodo';
+import Kyoodo from '../components/Kyoodo';
 import { getKyoodosAndUsers } from '../actions'
 import { connect } from 'react-redux'
 import { getUsersFromKyoodo } from '../utils'

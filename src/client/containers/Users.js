@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import User from './User'
+import UserAvatar from '../components/UserAvatar'
 import { getAllUsers } from '../actions'
 import { connect } from 'react-redux'
 
@@ -25,13 +25,15 @@ let Users = React.createClass({
     let users = []
     Object.keys(this.props.users).forEach((uID) => {
       users.push(
-        <User key={ uID } data= { this.props.users[uID] } />
+        <UserAvatar key={ uID } data= { this.props.users[uID] } />
       )
     })
 
     return (
-      <div className='row'>
-        <h3>Users</h3>
+      <div>
+        <div className='row'>
+          <h3>Users</h3>
+        </div>
         <div className='row medium-unstack'>
           { users }
         </div>

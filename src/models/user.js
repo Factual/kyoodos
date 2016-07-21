@@ -15,7 +15,6 @@ findAll = function (limit) {
                  .from('slack_users', 'u')
                  .left_join( _kyoodosById(), 'k', 'u.id = k.from_user_id')
 
-
   if (limit) sql = sql.limit(limit);
 
   return conn.execute(sql.toString());

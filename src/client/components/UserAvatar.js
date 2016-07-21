@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 
 // render a user with avatar
-let User = React.createClass({
+let UserAvatar = React.createClass({
   render: function() {
     return (
       <div className='column'>
@@ -12,8 +12,8 @@ let User = React.createClass({
   }
 })
 
-User.propTypes = {
+UserAvatar.propTypes = {
   data: React.PropTypes.object.isRequired
 }
 
-module.exports = User
+module.exports = UserAvatar
