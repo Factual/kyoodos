@@ -6,6 +6,7 @@ import configureStore from './configureStore'
 import { IndexRoute, Router, Route, browserHistory } from 'react-router'
 import Header from  './components/Header'
 import Kyoodos from './components/Kyoodos'
+import Users from './components/Users'
 
 const App = React.createClass({
   render() {
@@ -17,12 +18,6 @@ const App = React.createClass({
         </main>
       </div>
     );
-  }
-})
-
-const Users = React.createClass({
-  render() {
-    return ( <div>HELLO</div> )
   }
 })
 
