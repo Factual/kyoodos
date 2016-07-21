@@ -26,16 +26,17 @@ find = function (ids) {
 
   if (ids_list.length == 1) {
     sql = squel.select()
-                   .from('slack_users')
-                   .where('id=?', ids_list[0]);
+                   .from(squel.select().from('slack_users').where('id=?', ids_list[0]), 'u')
+                   .left_join( _kyoodosById(), 'k', 'u.id = k.from_user_id')
 
     return conn.execute(sql.toString()).then(function (rows) {
       return rows[0];
     });
   } else {
     sql = squel.select()
-                   .from('slack_users')
-                   .where('id in ?', ids_list);
+                  .from(squel.select().from('slack_users').where('id in ?', ids_list), 'u')
+                 .left_join( _kyoodosById(), 'k', 'u.id = k.from_user_id')
+
     return conn.execute(sql.toString());
   }
 }
