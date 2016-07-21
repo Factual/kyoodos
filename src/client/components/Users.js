@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
-import { getUsers } from '../actions'
+import User from './User'
+import { getAllUsers } from '../actions'
 import { connect } from 'react-redux'
 
 const mapStateToProps = (state) => {
@@ -10,24 +11,27 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getUsers: () => {
-      dispatch(getUsers())
+    getAllUsers: () => {
+      dispatch(getAllUsers())
     }
   }
 }
 
 let Users = React.createClass({
+  componentWillMount: function() {
+    this.props.getAllUsers()
+  },
   render: function() {
-    if (this.props.users) {
-      let users = []
-      return (
-        <div className='row medium-unstack'>
-          { users }
-        </div>
-      )
-    } else {
-      return (<div className='users'>...</div>)
-    }
+    let users = []
+    Object.keys(this.props.users).forEach((uID) => {
+      users.push(<User key={ uID } data= { this.props.users[uID] } />)
+    })
+
+    return (
+      <div className='row medium-unstack'>
+        { users }
+      </div>
+    )
   }
 })
 
@@ -36,7 +40,8 @@ Users.propTypes = {
 }
 
 Users = connect(
-  mapStateToProps
+  mapStateToProps,
+  mapDispatchToProps
 )(Users)
 
 module.exports = Users

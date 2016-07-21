@@ -21,7 +21,7 @@ export function getKyoodos() {
 export function getAllUsers() {
   return (dispatch) => {
     dispatch({ type: 'USERS_FETCH' })
-    return fetchAllUsers().then(function(resp) {
+    return fetchUsers().then(function(resp) {
       if (resp.status >= 400) {
         dispatch({ type: 'USERS_FETCH_ERROR', error })
       } else {
