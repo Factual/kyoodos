@@ -12,7 +12,7 @@ UserProfile.propTypes = {
 
 }
 
-UserProfile.connect(
+UserProfile = connect(
   {}
 )(UserProfile)
 

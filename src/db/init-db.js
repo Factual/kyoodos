@@ -2,8 +2,8 @@ var conn = require('./conn');
 
 var sql = `
   -- DROP ALL TABLES
-  -- DROP SCHEMA PUBLIC CASCADE;
-  -- CREATE SCHEMA PUBLIC;
+  DROP SCHEMA PUBLIC CASCADE;
+  CREATE SCHEMA PUBLIC;
 
   -- CREATE TABLES
   CREATE TABLE IF NOT EXISTS slack_users(
@@ -15,7 +15,8 @@ var sql = `
     "avatar"     varchar(256)
   );
 
-  CREATE SEQUENCE IF NOT EXISTS "kyoodo_id_seq";
+  CREATE SEQUENCE "kyoodo_id_seq";
+
   CREATE TABLE IF NOT EXISTS "kyoodos" (
     "id"           int4 NOT NULL DEFAULT nextval('kyoodo_id_seq'),
     "from_user_id" varchar(40) NOT NULL,
