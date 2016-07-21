@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 
 // render a user with avatar
 let UserAvatar = React.createClass({
+  render: function() {
     let data = this.props.data
     let imageStyle = {
       backgroundImage: "url('" + data.avatar.replace('$1', '?') + "')",
