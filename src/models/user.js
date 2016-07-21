@@ -10,10 +10,20 @@ _kyoodosById = function() {
   return sql
 }
 
+_kyoodosReceived = function() {
+  var sql = squel.select()
+              .field('to_user_id')
+              .field('count(*)', 'count_of_received_kyoodos')
+              .from('kyoodos_receivers')
+              .group('to_user_id');
+  return sql
+}
+
 findAll = function (limit) {
   var sql = squel.select()
                  .from('slack_users', 'u')
                  .left_join( _kyoodosById(), 'k', 'u.id = k.from_user_id')
+                 .left_join( _kyoodosReceived(), 'r', 'u.id = r.to_user_id')
 
   if (limit) sql = sql.limit(limit);
 
@@ -28,6 +38,7 @@ find = function (ids) {
     sql = squel.select()
                    .from(squel.select().from('slack_users').where('id=?', ids_list[0]), 'u')
                    .left_join( _kyoodosById(), 'k', 'u.id = k.from_user_id')
+                   .left_join( _kyoodosReceived(), 'r', 'u.id = r.to_user_id')
 
     return conn.execute(sql.toString()).then(function (rows) {
       return rows[0];
@@ -35,7 +46,8 @@ find = function (ids) {
   } else {
     sql = squel.select()
                   .from(squel.select().from('slack_users').where('id in ?', ids_list), 'u')
-                 .left_join( _kyoodosById(), 'k', 'u.id = k.from_user_id')
+                  .left_join( _kyoodosById(), 'k', 'u.id = k.from_user_id')
+                  .left_join( _kyoodosReceived(), 'r', 'u.id = r.to_user_id')
 
     return conn.execute(sql.toString());
   }
