@@ -24,10 +24,8 @@ lastCreated = function () {
 
 _kyoodosReceivedBy = function(user_id) {
   var sql = squel.select()
-              .field('kyoodo_id')
-              .field('to_user_id')
               .from('kyoodos_receivers')
-              .where('kyoodo_id=?', user_id)
+              .where('to_user_id=?', user_id)
   return sql
 }
 
