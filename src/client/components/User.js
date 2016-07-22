@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react'
-import Message from './Message'
-import UserAvatar from './UserAvatar'
+import UserAvatar from '../components/UserAvatar'
 
 let User = React.createClass({
   render: function() {
@@ -11,13 +10,10 @@ let User = React.createClass({
             <UserAvatar data = { this.props.data } />
           </div>
           <div className='medium-12 columns kyoodo__section'>
-            <div><strong>Name:</strong> { this.props.data.username } </div>
-            <div><strong>Count of kudos sent:</strong> { this.props.data.count_of_sent_kyoodos || "none :(" } </div>
-            <div><strong>Count of kudos received:</strong> { this.props.data.count_of_received_kyoodos || "none :(" } </div>
-            <div className='medium-12 columns kyooodo__section kyoodo__message'>
-              <h5>Last received kyoodo: </h5>
-              <Message users={this.props.users} message={ this.props.content } />
-            </div>
+            <div>Name: { this.props.username } </div>
+            <div>Kyoodos sent: { this.props.data.count_of_sent_kyoodos } </div>
+            <div>Last received kyoodo: </div>
+            <div>Last sent kyoodo: </div>
           </div>
         </div>
       </div>

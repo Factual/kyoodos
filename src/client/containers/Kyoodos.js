@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import Kyoodo from '../components/Kyoodo';
-import { getKyoodosAndUsers, getKyoodoReceivers } from '../actions'
+import { getKyoodosAndUsers } from '../actions'
 import { connect } from 'react-redux'
 import { getUsersFromKyoodo } from '../utils'
 
@@ -64,7 +64,7 @@ Kyoodos.propTypes = {
 
 Kyoodos = connect(
     mapStateToProps,
-    { getKyoodosAndUsers, getKyoodoReceivers }
+    { getKyoodosAndUsers }
 )(Kyoodos)
 
 module.exports = Kyoodos

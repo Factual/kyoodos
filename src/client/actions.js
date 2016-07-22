@@ -2,12 +2,13 @@ import { API_ENDPOINTS } from './consts'
 import fetch from 'isomorphic-fetch'
 import { parseKyoodos } from './utils'
 
+
 export function getKyoodos() {
   return dispatch => {
     dispatch({ type: 'KYOODOS_FETCH' })
     return fetchKyoodos().then(function(resp) {
       if (resp.status >= 400) {
-        dispatch({ type: 'KYOODOS_FETCH_ERROR', resp })
+        dispatch({ type: 'KYOODOS_FETCH_ERROR', resp})
       } else {
         return resp.json()
       }
@@ -15,57 +16,6 @@ export function getKyoodos() {
       dispatch({ type: 'KYOODOS_FETCH_SUCCESS', data })
     })
   }
-}
-
-export function getKyoodoReceivers(kudo_id) {
-  return (dispatch) => {
-    dispatch({ type: 'USERS_FETCH' })
-    return fetchKyoodoReceivers().then(function(resp) {
-      if (resp.status >= 400) {
-        dispatch({ type: 'USERS_FETCH_ERROR', resp })
-      } else {
-        return resp.json()
-      }
-    }).then(function(data) {
-      dispatch({ type: 'KYOODOS_RECEIVERS_FETCH_SUCCESS', data })
-    })
-  }
-}
-
-export function getLastSent(user_id) {
-  return (dispatch) => {
-    dispatch({ type: 'KYOODOS_FETCH' })
-    return fetchLastKyoodoToOrFromUser(user_id, 'from').then(function(resp) {
-      if (resp.status >= 400) {
-        dispatch({ type: 'KYOODOS_FETCH_ERROR', resp })
-      } else {
-        return resp.json()
-      }
-    }).then(function(data) {
-      dispatch({ type: 'KYOODOS_LAST_SENT_BY_USER', data })
-    })
-  }
-}
-
-export function getLastReceived(user_id) {
-  return (dispatch) => {
-    dispatch({ type: 'KYOODOS_FETCH' })
-    return fetchLastKyoodoToOrFromUser(user_id, 'to').then(function(resp) {
-      if (resp.status >= 400) {
-        dispatch({ type: 'KYOODOS_FETCH_ERROR', resp })
-      } else {
-        return resp.json()
-      }
-    }).then(function(data) {
-      dispatch({ type: 'KYOODOS_LAST_RECEIVED_BY_USER', data })
-    })
-  }
-}
-
-function fetchLastKyoodoToOrFromUser(user_id, to_or_from) {
-  let url = API_ENDPOINTS['kyoodos']
-  url += '/' + user_id + '/' + to_or_from
-  return fetch(url)
 }
 
 export function getAllUsers() {
@@ -119,12 +69,6 @@ export function getLastCreatedKyoodo() {
   return {
     type: 'KYOODOS_GET_LAST_CREATED'
   }
-}
-
-function fetchKyoodoReceivers(kudo_id) {
-  let url = API_ENDPOINTS['kyoodos']
-  url += '/' + kudo_id + '/to'
-  return fetch(url)
 }
 
 function fetchUsers(user_ids) {
