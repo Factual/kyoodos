@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import Kyoodo from '../components/Kyoodo';
-import { getKyoodosAndUsers } from '../actions'
+import { getKyoodosAndUsers, getKyoodoReceivers } from '../actions'
 import { connect } from 'react-redux'
 import { getUsersFromKyoodo } from '../utils'
 
@@ -39,7 +39,7 @@ let Kyoodos = React.createClass({
         let to_users = users.filter(function(u) { return u != k.from_user_id })
 
         let receivers = to_users.map((curr) => {
-          return data.users[curr]
+          return data.users[curr] || {}
         })
         kyoodos.push(<Kyoodo key = { k.id }
                              from_user = { data.users[k.from_user_id] || 'unknown' }
@@ -64,7 +64,7 @@ Kyoodos.propTypes = {
 
 Kyoodos = connect(
     mapStateToProps,
-    { getKyoodosAndUsers }
+    { getKyoodosAndUsers, getKyoodoReceivers }
 )(Kyoodos)
 
 module.exports = Kyoodos
