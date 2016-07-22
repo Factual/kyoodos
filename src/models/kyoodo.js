@@ -24,8 +24,10 @@ lastCreated = function () {
 
 _kyoodosReceivedBy = function(user_id) {
   var sql = squel.select()
+              .field('kyoodo_id')
+              .field('to_user_id')
               .from('kyoodos_receivers')
-              .where('to_user_id=?', user_id)
+              .where('kyoodo_id=?', user_id)
   return sql
 }
 
@@ -34,14 +36,15 @@ lastToOrFromUser = function(user_id, to_or_from) {
               .from('kyoodos', 'k')
 
   if (to_or_from == "to") {
-    sql = sql.left_join( _kyoodosReceivedBy(user_id), 'r', 'k.id = r.kyoodo_id')
+    sql = sql.join( _kyoodosReceivedBy(user_id), 'r', 'k.id = r.kyoodo_id')
+
   } else if (to_or_from == "from") {
     sql = sql.where("from_user_id = ?", user_id)
   }
 
   sql = sql
-        .order('created_at', false)
-        .limit(1).toString();
+          .order('created_at', false)
+          .limit(1).toString();
 
   return conn.execute(sql).then(function (rows) {
     return rows[0];
