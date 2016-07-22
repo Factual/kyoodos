@@ -111,7 +111,7 @@ a .kyoodos__header__link:hover {
 .kyoodos { text-align: center }
 
 .kyoodo {
-  animation: fadeout 2s ease-in-out forwards;
+  animation: fadein 2s ease-in-out forwards;
   opacity: 1;
   display: block;
   background-color: #edeeee;

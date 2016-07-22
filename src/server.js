@@ -37,6 +37,10 @@ app.get('/api/users/:ids', function(req, res, next) {
   User.find(req.params.ids).then(resJson(res)).catch(next);
 })
 
+app.get('*', function(req, res){
+  res.redirect('/');
+});
+
 var server = app.listen(3000, function() {
   console.log('Listening on port 3000!');
 })
