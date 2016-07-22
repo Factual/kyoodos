@@ -32,7 +32,7 @@ export function getKyoodoReceivers(kudo_id) {
   }
 }
 
-export function getLastSent(user_id) {
+function getLastSent(user_id) {
   return (dispatch) => {
     dispatch({ type: 'KYOODOS_FETCH' })
     return fetchLastKyoodoToOrFromUser(user_id, 'from').then(function(resp) {
@@ -47,7 +47,7 @@ export function getLastSent(user_id) {
   }
 }
 
-export function getLastReceived(user_id) {
+function getLastReceived(user_id) {
   return (dispatch) => {
     dispatch({ type: 'KYOODOS_FETCH' })
     return fetchLastKyoodoToOrFromUser(user_id, 'to').then(function(resp) {
@@ -102,6 +102,18 @@ export function getUsers(user_ids) {
     } else {
       dispatch({ type: 'USERS_FETCH_SUCCESS', cachedUsers})
     }
+  }
+}
+
+export function getUsersAndLastReceivedKyoodo() {
+  return (dispatch, getState) => {
+    return dispatch(getAllUsers()).then(() => {
+      const fetchedUsers = getState().data.users
+      const userIds = Object.keys(fetchedUsers)
+      userIds.forEach((id) => {
+        return dispatch(getLastReceived(id))
+      })
+    })
   }
 }
 

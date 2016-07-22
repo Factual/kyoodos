@@ -1,8 +1,7 @@
 
 const initialState = {
   kyoodos: [],
-  users: {},
-  allUsers: {}
+  users: {}
 }
 
 export default function data(state=initialState, action) {
@@ -14,13 +13,13 @@ export default function data(state=initialState, action) {
     case 'KYOODOS_FETCH_SUCCESS':
       return {
         kyoodos: [...action.data],
-        allUsers: state.allUsers,
         users: state.users
       }
+    case 'KYOODOS_LAST_RECEIVED_BY_USER': 
+      return state
     case 'USERS_FETCH_ALL_SUCCESS':
       return {
         kyoodos: state.kyoodos,
-        allUsers: action.data,
         users: state.users
       }
     case 'USERS_FETCH_ERROR':
@@ -35,7 +34,6 @@ export default function data(state=initialState, action) {
       }
       return {
         kyoodos: state.kyoodos,
-        allUsers: state.allUsers,
         users: updatedUsers ? updatedUsers : state.users
       }
     case 'USERS_FETCH_CACHED':

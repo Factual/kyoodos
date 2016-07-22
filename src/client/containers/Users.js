@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import User from '../components/User'
-import { getAllUsers } from '../actions'
+import { getUsersAndLastReceivedKyoodo } from '../actions'
 import { connect } from 'react-redux'
 
 const mapStateToProps = (state) => {
@@ -9,17 +9,9 @@ const mapStateToProps = (state) => {
     }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    getAllUsers: () => {
-      dispatch(getAllUsers())
-    }
-  }
-}
-
 let Users = React.createClass({
   componentWillMount: function() {
-    this.props.getAllUsers()
+    this.props.getUsersAndLastReceivedKyoodo()
   },
   render: function() {
     let users = []
@@ -45,7 +37,7 @@ Users.propTypes = {
 
 Users = connect(
   mapStateToProps,
-  mapDispatchToProps
+  { getUsersAndLastReceivedKyoodo } 
 )(Users)
 
 module.exports = Users
