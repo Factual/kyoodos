@@ -6,43 +6,44 @@ import { getUsersFromKyoodo } from '../utils'
 
 let UserProfile = React.createClass({
   componentWillMount: function() {
+    console.log('will');
     this.props.getFromKyoodos(this.props.params.userId);
     this.props.getToKyoodos(this.props.params.userId);
   },
   render: function() {
-    let data = this.props.data
-    console.log(data)
-    if (data && data.from && data.to && (data.from.length > 0 || data.to.length > 0)) {
+
+    if (this.props.from || this.props.to) {
       let kyoodos = {
         from: [],
         to: []
       }
 
-      Object.keys(kyoodos).forEach(function (key) {
-        data[key].forEach(function(k) {
+      // for both to and from kyoodos ...
+      Object.keys(kyoodos).forEach((key, i) => {
+        (this.props.to).forEach((k) => {
           let users = getUsersFromKyoodo(k)
-          let to_users = users.filter(function(u) { return u != k.from_user_id })
+          let to_users = users.filter((u) => { return u != k.from_user_id })
           let receivers = to_users.map((curr) => {
-            return data.users[curr] || {}
+            return this.props.users[curr] || {}
           })
           kyoodos[key].push(
-            <Kyoodo key = { k.id }
-                    from_user = { data.users[k.from_user_id] || 'unknown' }
+            <Kyoodo key = { k.id + i }
+                    from_user = { this.props.users[k.from_user_id] || 'unknown' }
                     receivers = { receivers }
-                    users = { data.users }
+                    users = { this.props.users }
                     content = { k.content } />
           )
-        });
-      });
+        })
+      })
 
       return (
-        <div>
-          <h3>FROM</h3>
-          <div className='row medium-unstack kyoodos'>
-            { kyoodos.from }
-          </div>
-          <h3>TO</h3>
-          <div className='row medium-unstack kyoodos'>
+        <div className='row medium-unstack kyoodos'>
+          <div className='medium-6 columns'>
+            <h3>kyoodos sent</h3>
+              { kyoodos.from }
+            </div>
+          <div className='medium-6 columns'>
+            <h3>kyoodos received</h3>
             { kyoodos.to }
           </div>
         </div>
@@ -56,17 +57,16 @@ let UserProfile = React.createClass({
 UserProfile.propTypes = {
 }
 
+const mapStateToProps = (state) => {
+  return {
+    users: state.data.users,
+    from: state.data.kyoodosFrom,
+    to: state.data.kyoodosTo
+  }
+}
+
 UserProfile = connect(
-  (state, props) => {
-    return {
-      data: {
-        users: state.data.users,
-        from: state.data.kyoodosFrom || [],
-        to: state.data.kyoodosTo || [],
-        userId: props.params.userId
-      }
-    }
-  },
+  mapStateToProps,
   { getFromKyoodos, getToKyoodos }
 )(UserProfile)
 

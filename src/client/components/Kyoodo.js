@@ -10,7 +10,7 @@ let Kyoodo = React.createClass({
     let receivers = [];
     this.props.receivers.forEach((r, id) => {
       receivers.push(
-        <Link to={`/users/${r.id}`}>
+        <Link key={ id } to={`/users/${r.id}`}>
           <UserAvatar key={ id } data={ r } />
         </Link>
       )
