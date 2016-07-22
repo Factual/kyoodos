@@ -32,6 +32,35 @@ export function getKyoodoReceivers(kudo_id) {
   }
 }
 
+export function getFromKyoodos(user_id) {
+  return (dispatch) => {
+    dispatch({ type: 'KYOODOS_FROM_FETCH' })
+    return fetchFromKyoodos(user_id).then(function(resp) {
+      if (resp.status >= 400) {
+        dispatch({ type: 'KYOODOS_FROM_FETCH_ERROR', resp })
+      } else {
+        return resp.json()
+      }
+    }).then(function(from) {
+      dispatch({ type: 'KYOODOS_FROM_FETCH_SUCCESS', from })
+    })
+  }
+}
+export function getToKyoodos(user_id) {
+  return (dispatch) => {
+    dispatch({ type: 'KYOODOS_TO_FETCH' })
+    return fetchToKyoodos(user_id).then(function(resp) {
+      if (resp.status >= 400) {
+        dispatch({ type: 'KYOODOS_TO_FETCH_ERROR', resp })
+      } else {
+        return resp.json()
+      }
+    }).then(function(to) {
+      dispatch({ type: 'KYOODOS_TO_FETCH_SUCCESS', to})
+    })
+  }
+}
+
 function getLastSent(user_id) {
   return (dispatch) => {
     dispatch({ type: 'KYOODOS_FETCH' })
@@ -136,6 +165,17 @@ export function getLastCreatedKyoodo() {
 function fetchKyoodoReceivers(kudo_id) {
   let url = API_ENDPOINTS['kyoodos']
   url += '/' + kudo_id + '/to'
+  return fetch(url)
+}
+
+function fetchFromKyoodos(user_id) {
+  let url = API_ENDPOINTS['kyoodos']
+  url += '/' + user_id + '/from'
+  return fetch(url)
+}
+function fetchToKyoodos(user_id) {
+  let url = API_ENDPOINTS['kyoodos']
+  url += '/' + user_id + '/to'
   return fetch(url)
 }
 

@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import UserAvatar from './UserAvatar'
 import Message from './Message'
+import { Link } from 'react-router'
 
 
 // render a single kyoodo
@@ -8,7 +9,11 @@ let Kyoodo = React.createClass({
   render: function() {
     let receivers = [];
     this.props.receivers.forEach((r, id) => {
-      receivers.push(<UserAvatar key={ id } data={ r } />)
+      receivers.push(
+        <Link to={`/users/${r.id}`}>
+          <UserAvatar key={ id } data={ r } />
+        </Link>
+      )
     })
 
     return (
@@ -16,7 +21,9 @@ let Kyoodo = React.createClass({
         className='columns kyoodo'>
         <div className='row'>
           <div className='medium-12 columns kyoodo__section kyoodo__from'>
-            <UserAvatar data={ this.props.from_user } />
+            <Link to={`/users/${this.props.from_user.id}`}>
+              <UserAvatar data={ this.props.from_user } />
+            </Link>
           </div>
           <div className='medium-12 columns kyooodo__section kyoodo__message'>
             <Message users={this.props.users} message={ this.props.content } />

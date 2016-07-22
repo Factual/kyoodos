@@ -13,7 +13,7 @@ export const FETCH_API_SUCCESS = 'FETCH_API_SUCCESS'
 export const FETCH_API_FAILURE = 'FETCH_API_FAILURE'
 
 export const API_ENDPOINTS = {
-  kyoodos: 'api/kyoodos',
-  last_created_kyoodo: 'api/kyoodos/lastCreated',
-  users: 'api/users'
+  kyoodos: '/api/kyoodos',
+  last_created_kyoodo: '/api/kyoodos/lastCreated',
+  users: '/api/users'
 }

@@ -53,7 +53,7 @@ let Kyoodos = React.createClass({
         </div>
       )
     } else {
-      return (<div className='kyoodos'><img src='images/loading.gif' /></div>)
+      return (<div className='kyoodos'><img src='/images/loading.gif' /></div>)
     }
   }
 })

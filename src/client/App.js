@@ -41,9 +41,8 @@ ReactDom.render((
       <Route path="/" component={App}>
         <Route path="/about" component={About}/>
         <Route path="/explore" component={Explore}/>
-        <Route path="/users" component={Users} >
-          <Route path="/user/:userId" component={UserProfile} />
-        </Route>
+        <Route path="/users" component={Users} />
+        <Route path="/users/:userId" component={UserProfile} />
         <Route path="*" component={Kyoodos}/>
         <IndexRoute component={Kyoodos} />
       </Route>

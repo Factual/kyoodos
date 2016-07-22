@@ -1,11 +1,30 @@
-
 const initialState = {
   kyoodos: [],
-  users: {}
+  users: {},
+  kyoodosFrom: [],
+  kyoodosTo: [],
 }
 
 export default function data(state=initialState, action) {
   switch(action.type) {
+    case 'KYOODOS_FROM_FETCH':
+      return state
+    case 'KYOODOS_FROM_FETCH_ERROR':
+      return state
+    case 'KYOODOS_FROM_FETCH_SUCCESS':
+      return Object.assign({}, initialState, {
+        kyoodosFrom: action.from
+      })
+    case 'KYOODOS_TO_FETCH':
+      return state
+    case 'KYOODOS_TO_FETCH_ERROR':
+      return state
+    case 'KYOODOS_TO_FETCH_SUCCESS':
+      return Object.assign({}, initialState, {
+        kyoodosTo: action.to
+      })
+
+
     case 'KYOODOS_FETCH':
       return state
     case 'KYOODOS_FETCH_ERROR':

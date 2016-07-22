@@ -10,14 +10,14 @@ let Header = React.createClass({
             <a href="http://www.factual.com/" >
               <div className='kyoodos__header__link logo'></div>
             </a>
-            <a href="." title='like'>
+            <Link to={`/`}>
               <div className='svg kyoodos__header__link like'></div>
-            </a>
+            </Link>
           </div>
         </div >
         <div className='top-bar-right kyoodos__header__menu small-2 medium-2 columns'>
-          <Link to={`explore`}><div className='svg kyoodos__header__link explore'></div></Link>
-          <Link to={`users`}><div className='svg kyoodos__header__link user'></div></Link>
+          <Link to={`/explore`}><div className='svg kyoodos__header__link explore'></div></Link>
+          <Link to={`/users`}><div className='svg kyoodos__header__link user'></div></Link>
         </div>
       </div>
     )

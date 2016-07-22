@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react'
 import Message from './Message'
 import UserAvatar from './UserAvatar'
+import { Link } from 'react-router'
 
 let User = React.createClass({
   render: function() {
@@ -8,7 +9,9 @@ let User = React.createClass({
       <div className='columns kyoodo'>
         <div className='row'>
           <div className='medium-12 columns kyoodo__section kyoodo__from'>
+            <Link to={`/users/${this.props.data.id}`}>
             <UserAvatar data = { this.props.data } />
+            </Link>
           </div>
           <div className='medium-12 columns kyoodo__section'>
             <div><strong>Name:</strong> { this.props.data.username } </div>
