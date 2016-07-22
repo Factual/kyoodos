@@ -7,6 +7,7 @@ import { IndexRoute, Router, Route, browserHistory } from 'react-router'
 import Header from  './components/Header'
 import Kyoodos from './containers/Kyoodos'
 import Users from './containers/Users'
+import UserProfile from './containers/UserProfile'
 
 const App = React.createClass({
   render() {
@@ -40,7 +41,9 @@ ReactDom.render((
       <Route path="/" component={App}>
         <Route path="/about" component={About}/>
         <Route path="/explore" component={Explore}/>
-        <Route path="/users" component={Users} />
+        <Route path="/users" component={Users} >
+          <Route path="/user/:userId" component={UserProfile} />
+        </Route>
         <IndexRoute component={Kyoodos} />
       </Route>
     </Router>
