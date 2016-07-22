@@ -42,7 +42,7 @@ toOrFromUser = function(user_id, to_or_from) {
 
   sql = sql
           .order('created_at', false)
-          .limit(1).toString();
+          .toString();
 
   return conn.execute(sql)
 }
