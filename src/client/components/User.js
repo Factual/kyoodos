@@ -4,7 +4,6 @@ import UserAvatar from './UserAvatar'
 
 let User = React.createClass({
   render: function() {
-    console.log(this.props)
     return (
       <div className='columns kyoodo'>
         <div className='row'>
@@ -17,7 +16,6 @@ let User = React.createClass({
             <div><strong>Count of kudos received:</strong> { this.props.data.count_of_received_kyoodos || "none :(" } </div>
             <div className='medium-12 columns kyooodo__section kyoodo__message'>
               <h5>Last received kyoodo: </h5>
-              <Message users={this.props.users} message={ this.props.content } />
             </div>
           </div>
         </div>

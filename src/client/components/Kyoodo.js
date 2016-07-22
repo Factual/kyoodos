@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react';
 import UserAvatar from './UserAvatar'
 import Message from './Message'
-import { parseKyoodoContent } from '../utils'
 
 
 // render a single kyoodo

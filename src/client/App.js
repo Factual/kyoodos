@@ -44,6 +44,7 @@ ReactDom.render((
         <Route path="/users" component={Users} >
           <Route path="/user/:userId" component={UserProfile} />
         </Route>
+        <Route path="*" component={Kyoodos}/>
         <IndexRoute component={Kyoodos} />
       </Route>
     </Router>
