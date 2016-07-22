@@ -16,7 +16,13 @@ export default function data(state=initialState, action) {
         users: state.users
       }
     case 'KYOODOS_LAST_RECEIVED_BY_USER': 
-      return state
+      let user = action.data.to_user_id
+      let updated = {}
+      updated[user] = Object.assign(state.users[user], { last_received: action.data }) 
+      return {
+        kyoodos: state.kyoodos,
+        users: Object.assign(state.users, updated)
+      }
     case 'USERS_FETCH_ALL_SUCCESS':
       return {
         kyoodos: state.kyoodos,

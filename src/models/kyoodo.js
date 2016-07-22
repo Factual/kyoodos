@@ -52,4 +52,5 @@ lastToOrFromUser = function(user_id, to_or_from) {
 module.exports = {
   findAll: findAll,
   lastCreated: lastCreated,
-  lastToOrFromUser: lastToOrFromUser}
+  lastToOrFromUser: lastToOrFromUser
+}

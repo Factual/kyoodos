@@ -15,9 +15,10 @@ let Users = React.createClass({
   },
   render: function() {
     let users = []
+
     Object.keys(this.props.users).forEach((uID) => {
       users.push(
-        <User key={ uID } data= { this.props.users[uID] } />
+        <User key={ uID } data= { this.props.users[uID] } users= { this.props.users } />
       )
     })
 

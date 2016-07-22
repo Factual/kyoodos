@@ -15,7 +15,13 @@ let User = React.createClass({
             <div><strong>Count of kudos sent:</strong> { this.props.data.count_of_sent_kyoodos || "none :(" } </div>
             <div><strong>Count of kudos received:</strong> { this.props.data.count_of_received_kyoodos || "none :(" } </div>
             <div className='medium-12 columns kyooodo__section kyoodo__message'>
-              <h5>Last received kyoodo: </h5>
+            { (() => {
+              if (this.props.data.last_received) {
+                return (
+                  <Message message= { this.props.data.last_received.content } users={ this.props.users } />
+                )
+              }
+            })() }
             </div>
           </div>
         </div>
