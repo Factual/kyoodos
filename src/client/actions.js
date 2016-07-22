@@ -190,5 +190,6 @@ function fetchUsers(user_ids) {
 
 function fetchKyoodos() {
   let url = API_ENDPOINTS['kyoodos'];
+  url += '?limit=18'
   return fetch(url)
 }
