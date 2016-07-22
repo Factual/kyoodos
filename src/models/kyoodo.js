@@ -29,7 +29,7 @@ _kyoodosReceivedBy = function(user_id) {
   return sql
 }
 
-lastReceivedByUser = function(user_id, to_or_from) {
+lastToOrFromUser = function(user_id, to_or_from) {
   var sql = squel.select()
               .from('kyoodos', 'k')
 
@@ -43,11 +43,12 @@ lastReceivedByUser = function(user_id, to_or_from) {
         .order('created_at', false)
         .limit(1).toString();
 
-  return conn.execute(sql)
+  return conn.execute(sql).then(function (rows) {
+    return rows[0];
+  })
 }
 
 module.exports = {
   findAll: findAll,
   lastCreated: lastCreated,
-  lastReceivedByUser: lastReceivedByUser
-}
+  lastToOrFromUser: lastToOrFromUser}

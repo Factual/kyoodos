@@ -26,7 +26,7 @@ app.get('/api/kyoodos', function(req, res, next) {
 })
 
 app.get('/api/kyoodos/:user_id/:to_or_from', function(req, res, next) {
-  Kyoodo.lastReceivedByUser(req.params.user_id, req.params.to_or_from).then(resJson(res)).catch(next);
+  Kyoodo.lastToOrFromUser(req.params.user_id, req.params.to_or_from).then(resJson(res)).catch(next);
 })
 
 app.get('/api/users', function(req, res, next) {
