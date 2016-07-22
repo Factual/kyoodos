@@ -14,13 +14,14 @@ let UserProfile = React.createClass({
 
     if (this.props.from || this.props.to) {
       let kyoodos = {
-        from: [],
-        to: []
-      }
+            from: [],
+            to: []
+      };
 
       // for both to and from kyoodos ...
+
       Object.keys(kyoodos).forEach((key, i) => {
-        (this.props.to).forEach((k) => {
+        (this.props[key]).forEach((k) => {
           let users = getUsersFromKyoodo(k)
           let to_users = users.filter((u) => { return u != k.from_user_id })
           let receivers = to_users.map((curr) => {
