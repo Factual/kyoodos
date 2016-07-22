@@ -48,7 +48,7 @@ let Kyoodos = React.createClass({
                              content = { k.content } />)
       })
       return (
-        <div className='row medium-unstack kyoodos'>
+        <div className='row kyoodos'>
           { kyoodos }
         </div>
       )

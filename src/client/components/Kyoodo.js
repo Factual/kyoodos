@@ -20,16 +20,17 @@ let Kyoodo = React.createClass({
       <div
         className='columns kyoodo'>
         <div className='row'>
-          <div className='medium-12 columns kyoodo__section kyoodo__from'>
-            <Link to={`/users/${this.props.from_user.id}`}>
-              <UserAvatar data={ this.props.from_user } />
-            </Link>
+          <div className='medium-12 row kyoodo__section kyoodo__to'>
+            { receivers }
           </div>
           <div className='medium-12 columns kyooodo__section kyoodo__message'>
             <Message users={this.props.users} message={ this.props.content } />
           </div>
-          <div className='medium-12 row kyoodo__section kyoodo__to'>
-            { receivers }
+          <div className='medium-12 columns kyoodo__section kyoodo__from'>
+            <i>- by </i>
+            <Link to={`/users/${this.props.from_user.id}`}>
+              @{ this.props.from_user.username}
+            </Link>
           </div>
         </div>
       </div>

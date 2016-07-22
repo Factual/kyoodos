@@ -8,6 +8,10 @@
   padding-right: 5px;
 }
 
+.thumbnail {
+  margin-bottom: 2px;
+}
+
 h1 {
   font-family: 'Open Sans', sans-serif;
   font-weight: 700;
@@ -138,10 +142,10 @@ a .kyoodos__header__link:hover {
   display: block;
   bottom: 50%;
 }
-.kyoodo__from {
+.kyoodo__to {
   text-align: left;
 }
-.kyoodo__to{
+.kyoodo__from{
   position: absolute;
   bottom: 0;
   right: 0;
