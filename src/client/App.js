@@ -1,4 +1,5 @@
 import 'babel-polyfill' // Do this once before any other code in your app
+
 import React, { Component } from 'react';
 import ReactDom, { render, findDOMNode } from 'react-dom'
 import { Provider } from 'react-redux'

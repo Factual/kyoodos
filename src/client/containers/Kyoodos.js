@@ -1,5 +1,6 @@
-import React, { PropTypes } from 'react';
-import Kyoodo from '../components/Kyoodo';
+import React, { PropTypes } from 'react'
+import Kyoodo from '../components/Kyoodo'
+import StaggerIn from '../components/StaggerIn'
 import { getKyoodosAndUsers, getKyoodoReceivers } from '../actions'
 import { connect } from 'react-redux'
 import { getUsersFromKyoodo } from '../utils'
@@ -28,7 +29,7 @@ let Kyoodos = React.createClass({
     this.props.getKyoodosAndUsers();
   },
   componentDidMount: function() {
-    this.setInterval(this.props.getKyoodosAndUsers, 10000)
+    // this.setInterval(this.props.getKyoodosAndUsers, 10000)
   },
   render: function() {
     let data = this.props.data
@@ -49,7 +50,9 @@ let Kyoodos = React.createClass({
       })
       return (
         <div className='row kyoodos'>
-          { kyoodos }
+          <StaggerIn delay={ 1000 }>
+            { kyoodos }
+          </StaggerIn>
         </div>
       )
     } else {
